@@ -1,0 +1,142 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="443dp"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Test" >
+
+    <EditText
+        android:id="@+id/miasto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:text="Lublin" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/pogoda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/miasto"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Pogoda" />
+
+    <EditText
+        android:id="@+id/temperatura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pogoda"
+        android:layout_below="@+id/pogoda"
+        android:ems="10"
+        android:hint="Temperatura w st C"
+        android:inputType="numberDecimal|numberSigned" />
+
+    <EditText
+        android:id="@+id/wiatr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/temperatura"
+        android:layout_below="@+id/temperatura"
+        android:ems="10"
+        android:hint="Predkosc wiatru"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/sporty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/wiatr"
+        android:layout_alignParentBottom="true"
+        android:onClick="sporty"
+        android:text="Sporty" />
+
+    <EditText
+        android:id="@+id/dzienTygodnia"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/wiatr"
+        android:layout_alignRight="@+id/wiatr"
+        android:layout_below="@+id/wiatr"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:text="Poniedziałek" />
+
+    <EditText
+        android:id="@+id/dzien"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/dzienTygodnia"
+        android:ems="10"
+        android:hint="Data"
+        android:inputType="number" />
+    
+    <EditText
+        android:id="@+id/rok"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dzien"
+        android:layout_alignRight="@+id/dzienTygodnia"
+        android:layout_below="@+id/dzienTygodnia"
+        android:layout_toRightOf="@+id/minuty"
+        android:ems="10"
+        android:inputType="number"
+        android:text="2013" />
+    
+    <EditText
+        android:id="@+id/godzina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dzien"
+        android:layout_below="@+id/dzien"
+        android:layout_toLeftOf="@+id/miesiac"
+        android:ems="10"
+        android:text="12"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/minuty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/miesiac"
+        android:layout_below="@+id/dzien"
+        android:layout_toRightOf="@+id/dzien"
+        android:ems="10"
+        android:inputType="number"
+        android:text="00" />
+
+    <Button
+        android:id="@+id/ubrania"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rok"
+        android:layout_alignParentBottom="true"
+        android:onClick="ubrania"
+        android:text="Ubrania" />
+
+    <EditText
+        android:id="@+id/miesiac"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dzien"
+        android:layout_alignTop="@+id/rok"
+        android:layout_toRightOf="@+id/sporty"
+        android:ems="10"
+        android:inputType="number" />
+
+</RelativeLayout>
+
+</ScrollView>

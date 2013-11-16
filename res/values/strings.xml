@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PogodynkaTab</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="podajM">Podaj miasto</string>
+    <string name="title_activity_forecast">ForecastActivity</string>
+    <string name="title_activity_pogoda">Pogoda</string>
+    <string name="title_activity_pogoda10dni">Pogoda10dni</string>
+    <string name="title_activity_pogoda_godz">PogodaGodz</string>
+    <string name="title_activity_sporty">Sporty</string>
+    <string name="title_activity_ubrania">Ubrania</string>
+    <string name="title_activity_test">Test</string>
+
+</resources>
