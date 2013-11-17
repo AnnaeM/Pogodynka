@@ -54,6 +54,10 @@
             android:name="projekt.pogodynkatab.Test"
             android:label="@string/title_activity_test" >
         </activity>
+        <activity
+            android:name="projekt.pogodynkatab.Wypoczynek"
+            android:label="@string/title_activity_wypoczynek" >
+        </activity>
     </application>
 
 </manifest>

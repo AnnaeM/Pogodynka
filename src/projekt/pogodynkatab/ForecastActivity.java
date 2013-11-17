@@ -71,23 +71,29 @@ public class ForecastActivity extends TabActivity {
 		TabHost tabHost = getTabHost(); // tab dla phoTOS
 		TabSpec pogospec = tabHost.newTabSpec("Pogoda"); // tytu³ i zdjecie
 		pogospec.setIndicator("Pogoda",
-				getResources().getDrawable(R.drawable.icon_photos_tab));
+				getResources().getDrawable(R.drawable.icon_pogoda_tab));
 		Intent pogodaIntent = new Intent(this, Pogoda.class);
 		pogospec.setContent(pogodaIntent);
 
 		// Tab for Songs
 		TabSpec ubraniaSpec = tabHost.newTabSpec("Ubrania");
 		ubraniaSpec.setIndicator("Ubrania",
-				getResources().getDrawable(R.drawable.icon_songs_tab));
+				getResources().getDrawable(R.drawable.icon_ubrania_tab));
 		Intent ubraniaIntent = new Intent(this, Ubrania.class);
 		ubraniaSpec.setContent(ubraniaIntent);
 
 		// Tab for Videos
 		TabSpec sportSpec = tabHost.newTabSpec("Sporty");
 		sportSpec.setIndicator("Sporty",
-				getResources().getDrawable(R.drawable.icon_videos_tab));
+				getResources().getDrawable(R.drawable.icon_sport_tab));
 		Intent sportIntent = new Intent(this, Sporty.class);
 		sportSpec.setContent(sportIntent);
+		
+		//Tab dla wypoczynku
+		TabSpec wypSpec = tabHost.newTabSpec("Wypoczynek");
+		wypSpec.setIndicator("Wypoczynek",getResources().getDrawable(R.drawable.icon_wypoczynek_tab));
+		Intent wypIntent = new Intent(this,Wypoczynek.class);
+		wypSpec.setContent(wypIntent);
 
 		// Tab dla godzinowej?
 		TabSpec godzSpec = tabHost.newTabSpec("Godzinowa");
@@ -104,11 +110,12 @@ public class ForecastActivity extends TabActivity {
 				dni10Spec.setContent(dni10Intent);
 
 		// Adding all TabSpec to TabHost
-		tabHost.addTab(pogospec); // Adding photos tab
-		tabHost.addTab(ubraniaSpec); // Adding songs tab
-		tabHost.addTab(sportSpec); // Adding videos tab
-		tabHost.addTab(godzSpec);
-		tabHost.addTab(dni10Spec);
+		tabHost.addTab(pogospec); // pogoda na teraz
+		tabHost.addTab(godzSpec);	//godzinowa
+		tabHost.addTab(dni10Spec);	//10dniowa
+		tabHost.addTab(sportSpec); // sporty
+		tabHost.addTab(wypSpec);	//wypoczynek
+		tabHost.addTab(ubraniaSpec); // ubrania
 		}
 	}
 

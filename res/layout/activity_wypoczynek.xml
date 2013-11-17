@@ -21,6 +21,6 @@
          android:layout_alignLeft="@android:id/list"
          android:layout_alignParentTop="true"
          android:textSize="20dp"
-         android:text="Sporty" />
+         android:text="Wypoczynek" />
 
 </RelativeLayout>

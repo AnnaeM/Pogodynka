@@ -28,13 +28,16 @@ public class Sporty extends ListActivity {
 	public String dzienTygodnia;
 	public int miesiac;
 	public int godzina;
-	public ArrayList<String> listArray = new ArrayList<String>();
-	JSONObject jObject;
+	public ArrayList<String> listArray;
+	public JSONObject jObject;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sporty);
+		
+		listArray = new ArrayList<String>();
+		
 		if (ForecastActivity._mainActivity != null) {
 			List<ForecastDay> simple10days = ForecastActivity._mainActivity.simple10day;
 			dzien = simple10days.get(0);
@@ -54,7 +57,7 @@ public class Sporty extends ListActivity {
 					pogoda = ForecastActivity._mainActivity.current_observation
 							.getString("weather");
 				
-					Log.i("G³upi jestem",pogoda.toString());	//i czemu tego nie wyœwietla?
+					Log.i("G³upi jestem",pogoda.toString());	
 					if(pogoda.equals("")){
 						//bo w Pu³awach nie ma pogody :c
 						String pogodaAwaryjna;
@@ -153,30 +156,30 @@ public void wyborSportow(){
 		
 		char poraDnia = poraDnia();
 		//pogoda = pogoda.toLowerCase();
-		
-		if (pogoda.equals("pogodnie")) {
+		String pogoda2 = pogoda.toLowerCase(); 
+		if (pogoda2.equals("pogodnie")) {
 			ladnaPogoda(poraDnia);
-		} else if (pogoda.equals("przewaga chmur"))
+		} else if (pogoda2.equals("przewaga chmur"))
 			ladnaPogoda(poraDnia);
-		else if (pogoda.equals("ob³oki zanikaj¹ce"))
+		else if (pogoda2.equals("ob³oki zanikaj¹ce"))
 			ladnaPogoda(poraDnia);
-		else if (pogoda.equals("œnieg"))
+		else if (pogoda2.equals("œnieg"))
 			deszczowaPogoda(poraDnia);
-		else if (pogoda.equals("niewielkie zachmurzenie"))
+		else if (pogoda2.equals("niewielkie zachmurzenie"))
 			ladnaPogoda(poraDnia);
-		else if (pogoda.equals("deszcz"))
+		else if (pogoda2.equals("deszcz"))
 			deszczowaPogoda(poraDnia);
-		else if (pogoda.equals("lekki deszcz"))
+		else if (pogoda2.equals("lekki deszcz"))
 			deszczowaPogoda(poraDnia);
-		else if (pogoda.equals("pochmurno"))
+		else if (pogoda2.equals("pochmurno"))
 			ladnaPogoda(poraDnia);
-		else if (pogoda.equals("p³atki mg³y"))
+		else if (pogoda2.equals("p³atki mg³y"))
 			ladnaPogoda(poraDnia);
-		else if (pogoda.equals("lekkie przelotne deszcze"))
+		else if (pogoda2.equals("lekkie przelotne deszcze"))
 			deszczowaPogoda(poraDnia);
-		else if(pogoda.equals("lekka m¿awka"))	
+		else if(pogoda2.equals("lekka m¿awka"))	
 			ladnaPogoda(poraDnia);
-		else if(pogoda.equals("zamglenia"))
+		else if(pogoda2.equals("zamglenia"))
 			ladnaPogoda(poraDnia);
 		else if(pogoda.equals("m¿awka"))
 			deszczowaPogoda(poraDnia);
