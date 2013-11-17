@@ -152,7 +152,8 @@ public void wyborSportow(){
 
 		
 		char poraDnia = poraDnia();
-		pogoda = pogoda.toLowerCase();		
+		//pogoda = pogoda.toLowerCase();
+		
 		if (pogoda.equals("pogodnie")) {
 			ladnaPogoda(poraDnia);
 		} else if (pogoda.equals("przewaga chmur"))

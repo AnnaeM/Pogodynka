@@ -24,6 +24,7 @@ public class Ubrania extends Activity {
 	public String longitude;
 	public Double temp;
 	public String wind;
+	public boolean bedzieDeszcz;
 	JSONObject jObject;
 
 	@Override
@@ -50,9 +51,28 @@ public class Ubrania extends Activity {
 					wind = ForecastActivity._mainActivity.current_observation
 							.getString("wind_kph");
 					
-
-					if((pogoda.equals("deszcz"))||pogoda.equals("lekki deszcz")||pogoda.equals("lekkie przelotne deszcze")||
-							pogoda.equals("m¿awka"))
+					
+					//sprawdza, czy w ci¹gu 6h nie bêdzie deszczu
+					bedzieDeszcz=false;				
+					String pogodaZaGodzine="";		
+					int j;
+						
+					for(int i=0;i<5;i++){	
+						
+						pogodaZaGodzine = ForecastActivity._mainActivity.txt10day.get(i).fcttext.toString();
+						String zapowiedz="";
+						j=0;
+						while(pogodaZaGodzine.charAt(j)!='.'){
+							zapowiedz=zapowiedz+pogodaZaGodzine.charAt(j);
+							j++;					
+						}
+						if((zapowiedz.equals("Mo¿liwy deszcz"))||(zapowiedz.equals("Mo¿liwe burze"))){
+							bedzieDeszcz=true;							
+						}						
+					
+					}
+					if((pogoda.equals("deszcz"))||(pogoda.equals("lekki deszcz"))||pogoda.equals(("lekkie przelotne deszcze"))||
+							(pogoda.equals("m¿awka"))||(bedzieDeszcz))
 						ubierzDeszczowo();
 					else
 						ubierz();
