@@ -74,8 +74,21 @@ public class Sporty extends ListActivity {
 					}
 					wind = ForecastActivity._mainActivity.current_observation
 							.getString("wind_kph");
-					godzina =Integer.parseInt(dzien.data.hour);
+				//	godzina =Integer.parseInt(dzien.data.hour);
+					
 					miesiac = Integer.parseInt(dzien.data.month);
+					
+					String godzinaString ="";
+					String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
+					int i=0;
+					while(aktualnaGodzina.charAt(i)!=','){
+						i++;}
+					
+					
+					godzinaString = godzinaString+aktualnaGodzina.charAt(i+2)+aktualnaGodzina.charAt(i+3);
+					godzina = Integer.parseInt(godzinaString);
+					Log.i("Wyluskana godzina",String.valueOf(godzina));
+					
 					dzienTygodnia=dzien.data.weekDay;
 					wyborSportow();
 				} catch (JSONException e) {
@@ -121,7 +134,16 @@ public class Sporty extends ListActivity {
 				String m = jObject.getString("month");
 				miesiac = Integer.parseInt(m);
 
-				godzina = jObject.getInt("hour");
+				String godzinaString ="";
+				String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
+				int i=0;
+				while(aktualnaGodzina.charAt(i)!=','){
+					i++;}
+				
+				
+				godzinaString = godzinaString+aktualnaGodzina.charAt(i+2)+aktualnaGodzina.charAt(i+3);
+				godzina = Integer.parseInt(godzinaString);
+				
 				dzienTygodnia = jObject.getString("weekDay");
 
 				wyborSportow();
@@ -197,7 +219,7 @@ public void wyborSportow(){
 	public char poraDnia() {
 
 		char pora;
-
+		Log.i("Godzina", String.valueOf(godzina));
 		if ((godzina >= 6) && (godzina < 10))
 			pora = 'r'; // ranek
 		else if ((godzina >= 10) && (godzina < 14))
@@ -210,7 +232,9 @@ public void wyborSportow(){
 			pora = 'n'; // "noc";
 		else
 			pora = 'g'; // "g³êboka noc";
-
+		
+		Log.i("Pora dnia", String.valueOf(pora));
+		
 		return pora;
 	}
 

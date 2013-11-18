@@ -43,7 +43,8 @@ public class ForecastActivity extends TabActivity {
 	public List<ForecastDay> simple10day;
 	public JSONObject jObject;
 	public JSONObject Lublin = new JSONObject();
-	boolean pobrano;
+	public boolean pobrano;
+	public String aktualnaGodzina;
 
 	public static ForecastActivity _mainActivity;
 
@@ -436,6 +437,8 @@ public class ForecastActivity extends TabActivity {
 			Log.i(String.valueOf(i), hf.feelslike + " " + hf.czas.monthDay
 					+ " " + hf.czas.toString());
 
+			//JSONObject estimated = current_observation.getJSONObject("estimated");
+			aktualnaGodzina=current_observation.getString("observation_time");
 		}
 	}
 
@@ -456,6 +459,9 @@ public class ForecastActivity extends TabActivity {
 		Log.i("disLoc", disLoc.getLatitude() + " " + disLoc.getLongitude()
 				+ " " + disLoc.getFull());
 
+		
+		//aktualnaGodzina=display_location.getString("observation_time");
+		
 		/*
 		 * TextView tv = (TextView) this.findViewById(R.id.lokacja2TB);
 		 * tv.setText(display_location.getString("city"));
