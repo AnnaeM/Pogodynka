@@ -45,7 +45,8 @@ public class ForecastActivity extends TabActivity {
 	public JSONObject Lublin = new JSONObject();
 	public boolean pobrano;
 	public String aktualnaGodzina;
-
+	public Astronomy astronomia;
+	
 	public static ForecastActivity _mainActivity;
 
 	@Override
@@ -661,7 +662,7 @@ public class ForecastActivity extends TabActivity {
 		 * OBRABIANIE DANYCH ZWI¥ZANYCH Z ASTRONOMI¥-S£OÑCE I KSIÊ¯YÆ
 		 */
 		JSONObject astronomy = jObject.getJSONObject("moon_phase");
-		Astronomy astronomia = new Astronomy();
+		astronomia = new Astronomy();
 		astronomia.ageOfMoon = astronomy.getString("ageOfMoon");
 		astronomia.phaseofMoon = astronomy.getString("phaseofMoon");
 

@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ListActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,7 +59,7 @@ public class Sporty extends ListActivity {
 					pogoda = ForecastActivity._mainActivity.current_observation
 							.getString("weather");
 				
-					Log.i("G³upi jestem",pogoda.toString());	
+					Log.i("Pogoda",pogoda.toString());	
 					if(pogoda.equals("")){
 						//bo w Pu³awach nie ma pogody :c
 						String pogodaAwaryjna;
@@ -104,14 +106,19 @@ public class Sporty extends ListActivity {
 						android.R.layout.simple_list_item_1, listArray);
 				setListAdapter(array);
 				ListView listView = getListView();
+				
 				listView.setOnItemClickListener(new OnItemClickListener() {
-
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
 						// TODO Auto-generated method stub
-						Toast.makeText(getApplicationContext(),
-								((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+						//Toast.makeText(getApplicationContext(),((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+					
+						//String uri = "http://maps.google.com/maps?saddr="+"geo:"+ latitude + "," + longitude +"&q="+((TextView) view).getText();
+						String uri = "https://maps.google.pl/maps?q="+city+"+"+((TextView) view).getText();
+						Log.i("URL",uri);
+						startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+						
 					}
 
 				});
@@ -468,7 +475,7 @@ public void wyborSportow(){
 				if ((temp >= -15) && (temp <= 20)) {
 					bieganie();
 					standardowe();
-					listArray.add("Sanki");
+					//listArray.add("Sanki");
 				}
 
 				break;

@@ -8,6 +8,8 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +36,8 @@ public class Wypoczynek extends ListActivity {
 	public int miesiac;
 	public int godzina;
 	public JSONObject jObject;
+	public char poraRoku;
+	public char poraDnia;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +65,12 @@ public class Wypoczynek extends ListActivity {
 					pogoda = ForecastActivity._mainActivity.current_observation
 							.getString("weather");
 				
-					Log.i("G³upi jestem",pogoda.toString());	
+					Log.i("Pogoda",pogoda.toString());	
 					if(pogoda.equals("")){
 						//bo w Pu³awach nie ma pogody :c
 						String pogodaAwaryjna;
 						pogodaAwaryjna = ForecastActivity._mainActivity.txt10day.get(0).fcttext.toString();
-						Log.i("Pusta pogoda", pogodaAwaryjna);
+						Log.i("Pusta pogoda!", pogodaAwaryjna);
 						
 						int i=0;
 						while(pogodaAwaryjna.charAt(i)!='.'){
@@ -78,10 +82,22 @@ public class Wypoczynek extends ListActivity {
 					}
 					wind = ForecastActivity._mainActivity.current_observation
 							.getString("wind_kph");
-					godzina =Integer.parseInt(dzien.data.hour);
+					//godzina =Integer.parseInt(dzien.data.hour);
 					miesiac = Integer.parseInt(dzien.data.month);
 					dzienTygodnia=dzien.data.weekDay;
-					podstawowe();
+					
+					String godzinaString ="";
+					String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
+					int i=0;
+					while(aktualnaGodzina.charAt(i)!=','){
+						i++;}
+					
+					
+					godzinaString = godzinaString+aktualnaGodzina.charAt(i+2)+aktualnaGodzina.charAt(i+3);
+					godzina = Integer.parseInt(godzinaString);
+					
+					poraRoku();
+					wyborWypoczynku();
 					
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -109,7 +125,9 @@ public class Wypoczynek extends ListActivity {
 
 				godzina = jObject.getInt("hour");
 				dzienTygodnia = jObject.getString("weekDay");
-				podstawowe();
+				
+				poraRoku();
+				wyborWypoczynku();
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -132,8 +150,12 @@ public class Wypoczynek extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getApplicationContext(),
-						((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(),
+					//	((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+				
+				String uri = "https://maps.google.pl/maps?q="+city+"+"+((TextView) view).getText();
+				Log.i("URL",uri);
+				startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
 			}
 
 		});
@@ -147,6 +169,99 @@ public class Wypoczynek extends ListActivity {
 	}
 	
 	
+	public void poraDnia() {
+
+		Log.i("Godzina", String.valueOf(godzina));
+		if ((godzina >= 6) && (godzina < 10))
+			poraDnia = 'r'; // ranek
+		else if ((godzina >= 10) && (godzina < 14))
+			poraDnia = 'p'; // "poludnie";
+		else if ((godzina >= 14) && (godzina < 18))
+			poraDnia = 'o'; // "popo³udnie";
+		else if ((godzina >= 18) && (godzina < 22))
+			poraDnia = 'w'; // "wieczór";
+		else if ((godzina >= 22) && (godzina < 1))
+			poraDnia = 'n'; // "noc";
+		else
+			poraDnia = 'g'; // "g³êboka noc";
+		
+		Log.i("Pora dnia", String.valueOf(poraDnia));
+		
+	
+	}
+	
+	public void poraRoku() {
+
+		// mo¿na dodaæ np. przedwioœnie
+
+		if ((miesiac == 4) || (miesiac == 5)) { // kwiecien-maj
+			poraRoku = 'w';
+		} else if ((miesiac >= 6) && (miesiac <= 8)) { // czerwiec-sierpien
+			poraRoku = 'l';
+		} else if ((miesiac >= 9) && (miesiac <= 11)) { // wrzesien-list
+			poraRoku = 'j';
+		} else // grudzien-marzec
+		{poraRoku = 'z';
+		}
+
+
+	}
+	public void wyborWypoczynku(){
+		
+		poraDnia();
+		String pogoda2= pogoda.toLowerCase();
+		if (pogoda2.equals("pogodnie")) {
+			ladnaPogoda();			
+		} else if (pogoda2.equals("przewaga chmur"))
+			ladnaPogoda();
+		else if (pogoda2.equals("ob³oki zanikaj¹ce"))
+			ladnaPogoda();
+		else if (pogoda2.equals("œnieg"))
+			deszczowaPogoda();
+		else if (pogoda2.equals("niewielkie zachmurzenie"))
+			ladnaPogoda();
+		else if (pogoda2.equals("deszcz"))
+			deszczowaPogoda();
+		else if (pogoda2.equals("lekki deszcz"))
+			deszczowaPogoda();
+		else if (pogoda2.equals("pochmurno"))
+			ladnaPogoda();
+		else if (pogoda2.equals("p³atki mg³y"))
+			ladnaPogoda();
+		else if (pogoda2.equals("lekkie przelotne deszcze"))
+			deszczowaPogoda();
+		else if(pogoda2.equals("lekka m¿awka"))	
+			ladnaPogoda();
+		else if(pogoda2.equals("zamglenia"))
+			ladnaPogoda();
+		else if(pogoda.equals("m¿awka"))
+			deszczowaPogoda();
+		else if(pogoda.equals("mg³a"))
+			ladnaPogoda();
+		else if(pogoda.equals("lekka mg³a"))
+			ladnaPogoda();
+		else if(pogoda.equals("czêœciowe zamglenia"))
+			ladnaPogoda();
+		else
+			lista.add("Nieznany rodzaj pogody");
+
+		zalezne();	
+	}
+	
+	
+	public void ladnaPogoda(){
+		podstawowe();
+		podDachem();
+		niePada();
+		okazjonalne();
+		
+	}
+	
+	public void deszczowaPogoda(){
+		podDachem();
+		
+		
+	}
 	public void podstawowe(){
 		lista.add("Spacer");
 		lista.add("Spotkanie z przyjació³mi");
@@ -154,10 +269,11 @@ public class Wypoczynek extends ListActivity {
 		lista.add("Fotografowanie");
 		lista.add("Rysowanie krajobrazu");
 		lista.add("Wyjazd na dzia³kê/wieœ");
+		lista.add("Wyprawa do lasu");
 	}
 	
 	public void niePada(){
-		lista.add("Piknik");
+		
 		lista.add("Zoo");
 		
 	}
@@ -175,37 +291,64 @@ public class Wypoczynek extends ListActivity {
 		lista.add("Kó³ko plastyczne/muzyczne/modelarskie");
 	}
 	
-	public void wLesie(){
-		lista.add("Grzybobranie");
-		lista.add("Zbieranie jagód");
-		
-	}
 	
-	public void okazjonalne(){
+	public void okazjonalne(){		//dodaæ warunki
 		lista.add("Koncert");
 		lista.add("Cyrk");
-		lista.add("IdŸ na wydarzenie w mieœcie");
-	}
-	
-	public void wieczorem(){
-		lista.add("Impreza");		
-		lista.add("Randka w ciemno");
-		
+		//lista.add("IdŸ na wydarzenie w mieœcie");
 	}
 	
 	public void zalezne(){
-		lista.add("Ogl¹danie zachodu s³oñca");
-		lista.add("Ogl¹danie wschodu s³oñca");
-		lista.add("Obserwowanie gwiazd");
-		lista.add("Obserwowanie chmur");
+				
+		int wschodSlonca = ForecastActivity._mainActivity.astronomia.sunrise.hour;
+		int zachodSlonca = ForecastActivity._mainActivity.astronomia.sunset.hour;
 		
-		lista.add("Opalanie");
-		lista.add("Puszczanie latawca");
+		String pogoda2=pogoda.toLowerCase();
+		if((pogoda2.equals("pogodnie"))||(pogoda2.equals("niewielkie zachmurzenie"))
+				||pogoda2.equals("ob³oki zanikaj¹ce"))
+		{
+			if((godzina>=wschodSlonca-1)&&(godzina<=wschodSlonca+1))
+			{
+				lista.add("Ogl¹danie wschodu s³oñca");
+			}
+			
+			if((godzina>=zachodSlonca-1)&&(godzina<=zachodSlonca+1))
+			{
+				lista.add("Ogl¹danie zachodu s³oñca");
+			}
+			
+			if((poraDnia=='n')||(poraDnia=='g')){
+				lista.add("Obserwowanie gwiazd");
+			}
+			
+		}
 		
-		lista.add("Wyjœcie na pla¿ê");
-		lista.add("Przeja¿d¿ka promem");
-		lista.add("IdŸ na badania kontrolne");
+		if (!pogoda2.equals("pogodnie")){
+			lista.add("Obserwowanie chmur");
+		}
+		//lista.add("Wyjœcie na pla¿ê");
+		//lista.add("Przeja¿d¿ka promem");
+		//lista.add("IdŸ na badania kontrolne");
+		
+		if(poraRoku!='z'){
+			
+			if(Double.valueOf(wind)>10)
+				lista.add("Puszczanie latawca");
+			
+			if((poraDnia!='n')&&(poraDnia!='g')&&(poraDnia!='w'))
+				lista.add("Piknik");
+			
+			if(pogoda2.equals("pogodnie"))
+					lista.add("Opalanie");
+		}
+		
+		if((poraDnia=='w')||(poraDnia=='n')||(poraDnia=='g')){
+			lista.add("Impreza");		
+			lista.add("Randka w ciemno");
+		}
 		
 	}
+	
+	
 
 }

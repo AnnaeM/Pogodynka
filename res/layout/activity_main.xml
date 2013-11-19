@@ -36,9 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/miasto"
+        android:layout_alignRight="@+id/podajMiasto"
         android:layout_marginTop="115dp"
         android:onClick="doPogody"
-        android:text="@android:string/ok" />
+        android:text="Dalej" />
 
     <Button
         android:id="@+id/GPS"
