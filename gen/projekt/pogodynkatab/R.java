@@ -57,7 +57,7 @@ public final class R {
     }
     public static final class id {
         public static final int GPS=0x7f080003;
-        public static final int action_settings=0x7f080017;
+        public static final int action_settings=0x7f08001a;
         public static final int astronomy=0x7f08000a;
         public static final int btnMiasto=0x7f080002;
         public static final int data=0x7f080007;
@@ -69,7 +69,7 @@ public final class R {
         public static final int miasto=0x7f080001;
         public static final int miesiac=0x7f080014;
         public static final int minuty=0x7f080012;
-        public static final int obrazek=0x7f080016;
+        public static final int obrazek=0x7f080019;
         public static final int podajMiasto=0x7f080000;
         public static final int pogoda=0x7f080009;
         public static final int pogoda1=0x7f080008;
@@ -80,6 +80,9 @@ public final class R {
         public static final int textView1=0x7f08000b;
         public static final int ubrania=0x7f080015;
         public static final int wiatr=0x7f08000d;
+        public static final int wschod=0x7f080016;
+        public static final int wypoczynek=0x7f080018;
+        public static final int zachod=0x7f080017;
     }
     public static final class layout {
         public static final int activity_forecast=0x7f030000;
