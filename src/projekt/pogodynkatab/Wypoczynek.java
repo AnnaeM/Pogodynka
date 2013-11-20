@@ -155,11 +155,29 @@ public class Wypoczynek extends ListActivity {
 				// Toast.makeText(getApplicationContext(),
 				// ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 
-				String uri = "https://maps.google.pl/maps?q=" + city + "+"
+				/*String uri = "https://maps.google.pl/maps?q=" + city + "+"
+						+ ((TextView) view).getText();
+				Log.i("URL", uri);
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,Uri.parse(uri));
+				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+				startActivity(intent);
+				*/
+				/*String uri = "https://maps.google.pl/maps?q=" + city + "+"
 						+ ((TextView) view).getText();
 				Log.i("URL", uri);
 				startActivity(new Intent(android.content.Intent.ACTION_VIEW,
-						Uri.parse(uri)));
+						Uri.parse(uri)));*/
+				
+				String wyszukiwanie = fraza((String) ((TextView) view).getText());
+				
+				if(wyszukiwanie!="1"){
+				String uri = "https://maps.google.pl/maps?q=" + city + "+"
+						+ wyszukiwanie;
+				Log.i("URL", uri);
+				startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+						Uri.parse(uri)));}
+				
+				
 			}
 
 		});
@@ -293,7 +311,8 @@ public class Wypoczynek extends ListActivity {
 			lista.add("Teatr");
 			lista.add("Aquapark");
 			lista.add("Zakupy");
-			lista.add("Zajêcia plastyczne/muzyczne");
+			lista.add("Zajêcia plastyczne");
+			lista.add("Zajêcia muzyczne");
 			
 			if ((poraDnia == 'w') || (poraDnia == 'n') || (poraDnia == 'g')) {
 				lista.add("Wyjœcie na imprezê");
@@ -363,6 +382,30 @@ public class Wypoczynek extends ListActivity {
 		}
 
 
+	}
+	
+	public String fraza(String wybrany){
+		String f ="";
+		
+		if((wybrany=="Spacer")||(wybrany=="Spacer z psem")||(wybrany=="Fotografowanie")||(wybrany=="Rysowanie krajobrazu")||(wybrany=="Piknik")){
+			f = "Park";
+		}
+		else if((wybrany=="Wyjœcie na imprezê")||(wybrany=="Randka w ciemno")){
+			f="Club";		
+		}
+		else if(wybrany=="Zakupy"){
+			f="Centrum+handlowe";
+		}
+		else if((wybrany=="Ogl¹danie wschodu s³oñca")||(wybrany=="Ogl¹danie zachodu s³oñca")||(wybrany=="Obserwowanie gwiazd")
+				||(wybrany=="Obserwowanie chmur")||(wybrany=="Puszczanie latawca")||(wybrany=="Wyjazd na dzia³kê/wieœ")||(wybrany=="Opalanie")){
+			f="1";
+		}
+		else{
+			wybrany = wybrany.replace(' ','+');		
+			f = wybrany;
+		}
+		
+		return f;	
 	}
 
 }

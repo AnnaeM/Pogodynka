@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/miasto"
-        android:layout_alignRight="@+id/podajMiasto"
+        android:layout_alignRight="@+id/miasto"
         android:layout_marginTop="115dp"
         android:onClick="doPogody"
         android:text="Dalej" />
@@ -46,8 +46,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btnMiasto"
+        android:layout_alignRight="@+id/miasto"
         android:layout_below="@+id/btnMiasto"
-        android:layout_marginTop="38dp"
         android:onClick="GPS"
         android:text="Znajdź mnie przez GPS" />
 
@@ -58,6 +58,7 @@
         android:layout_alignLeft="@+id/GPS"
         android:layout_alignRight="@+id/GPS"
         android:layout_below="@+id/GPS"
+        android:layout_marginTop="42dp"
         android:onClick="test"
         android:text="Test aktywnosci" />
 
