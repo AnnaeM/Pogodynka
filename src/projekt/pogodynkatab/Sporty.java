@@ -168,9 +168,10 @@ public class Sporty extends ListActivity {
 				// String uri = "http://maps.google.com/maps?saddr="+"geo:"+
 				// latitude + "," + longitude +"&q="+((TextView)
 				// view).getText();
-				
-				String wyszukiwanie = fraza((String) ((TextView) view).getText());
-				
+
+				String wyszukiwanie = fraza((String) ((TextView) view)
+						.getText());
+
 				String uri = "https://maps.google.pl/maps?q=" + city + "+"
 						+ wyszukiwanie;
 				Log.i("URL", uri);
@@ -181,7 +182,6 @@ public class Sporty extends ListActivity {
 
 		});
 	}
-
 
 	public void wyborSportow() {
 
@@ -293,19 +293,21 @@ public class Sporty extends ListActivity {
 	public void naHali() {
 
 		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w')) {
-			listArray.add("Siatkówka");
-			listArray.add("Koszykówka");
-			listArray.add("Pi³ka no¿na");
-			listArray.add("Badminton");
-			listArray.add("Squash");
-			listArray.add("Si³ownia");
-			listArray.add("Szermierka");
-			listArray.add("£ucznictwo");
-			listArray.add("Strzelnica");
-			listArray.add("Wspinaczka");
-			listArray.add("Trening sztuk walki");
-			listArray.add("Basen");
-			listArray.add("Ping-pong");
+			if (!dzienTygodnia.equals("Niedziela")) {
+				listArray.add("Siatkówka");
+				listArray.add("Koszykówka");
+				listArray.add("Pi³ka no¿na");
+				listArray.add("Badminton");
+				listArray.add("Squash");
+				listArray.add("Si³ownia");
+				listArray.add("Szermierka");
+				listArray.add("£ucznictwo");
+				listArray.add("Strzelnica");
+				listArray.add("Wspinaczka");
+				listArray.add("Trening sztuk walki");
+				listArray.add("Basen");
+				listArray.add("Ping-pong");
+			}
 		}
 	}
 
@@ -346,7 +348,7 @@ public class Sporty extends ListActivity {
 
 	}
 
-	//gdy bêdzie zaznaczony checkbox
+	// gdy bêdzie zaznaczony checkbox
 	public void ekstremalne() {
 		listArray.add("Parkour");
 		listArray.add("Bungee");
@@ -355,48 +357,36 @@ public class Sporty extends ListActivity {
 		listArray.add("Windsurfing");
 		listArray.add("Lot balonem");
 	}
-	
-	
-	
-	public String fraza(String wybrany){
-		String f ="";
-		
-		if(wybrany=="Rower"){
+
+	public String fraza(String wybrany) {
+		String f = "";
+
+		if (wybrany == "Rower") {
 			f = "Œcie¿ka+rowerowa";
-		}
-		else if(wybrany=="Siatkówka"){
+		} else if (wybrany == "Siatkówka") {
 			f = "Boisko+siatkówka";
-		}
-		else if(wybrany=="Koszykówka"){
+		} else if (wybrany == "Koszykówka") {
 			f = "Boisko+koszykówka";
-		}
-		else if(wybrany=="Pi³ka no¿na"){
+		} else if (wybrany == "Pi³ka no¿na") {
 			f = "Boisko+do+pi³ki+no¿nej";
-		}
-		else if(wybrany=="Wspinaczka"){
+		} else if (wybrany == "Wspinaczka") {
 			f = "Œciana+wspinaczkowa";
-		}
-		else if(wybrany=="Tenis"){
+		} else if (wybrany == "Tenis") {
 			f = "Boisko+tenis";
-		}
-		else if(wybrany=="Jazda konna"){
+		} else if (wybrany == "Jazda konna") {
 			f = "Stadnina+koni";
-		}
-		else if((wybrany=="£y¿wy")||(wybrany=="Hokej")){
+		} else if ((wybrany == "£y¿wy") || (wybrany == "Hokej")) {
 			f = "Lodowisko";
-		}
-		else if(wybrany=="Narciarstwo"){
+		} else if (wybrany == "Narciarstwo") {
 			f = "Stok+narciarski";
-		}
-		else if(wybrany=="Trening sztuk walki"){
+		} else if (wybrany == "Trening sztuk walki") {
 			f = "Szko³a+sztuk+walki";
-		}
-		else{			
-			wybrany = wybrany.replace(' ','+');		
+		} else {
+			wybrany = wybrany.replace(' ', '+');
 			f = wybrany;
 		}
 		return f;
-		
+
 	}
 
 }
