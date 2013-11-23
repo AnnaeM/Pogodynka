@@ -122,7 +122,7 @@ public class Ubrania extends Activity {
 		 * new LayerDrawable(layers); obrazek.setImageDrawable(layerDrawable);
 		 */
 
-		if (temp < 10) {
+		if (temp < 5) {
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
@@ -189,7 +189,7 @@ public void ubierzDeszczowo(){
 		obrazek = (ImageView)findViewById(R.id.obrazek);
 		Resources r = getResources();
 		
-		if(temp<2){	
+		if(temp<5){	
 
 			Drawable[] layers = new Drawable[6];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
