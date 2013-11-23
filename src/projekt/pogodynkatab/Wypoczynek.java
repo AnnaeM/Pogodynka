@@ -388,17 +388,20 @@ public class Wypoczynek extends ListActivity {
 	public String fraza(String wybrany){
 		String f ="";
 		
-		if((wybrany=="Spacer")||(wybrany=="Spacer z psem")||(wybrany=="Fotografowanie")||(wybrany=="Rysowanie krajobrazu")||(wybrany=="Piknik")){
+		if((wybrany.equals("Spacer"))||(wybrany.equals("Spacer z psem"))||(wybrany.equals("Fotografowanie"))||(wybrany.equals("Rysowanie krajobrazu"))||(wybrany.equals("Piknik"))){
 			f = "Park";
 		}
-		else if((wybrany=="Wyjœcie na imprezê")||(wybrany=="Randka w ciemno")){
+		else if((wybrany.equals("Wyjœcie na imprezê"))||(wybrany.equals("Randka w ciemno"))){
 			f="Club";		
 		}
-		else if(wybrany=="Zakupy"){
+		else if(wybrany.equals("Zakupy")){
 			f="Centrum+handlowe";
 		}
-		else if((wybrany=="Ogl¹danie wschodu s³oñca")||(wybrany=="Ogl¹danie zachodu s³oñca")||(wybrany=="Obserwowanie gwiazd")
-				||(wybrany=="Obserwowanie chmur")||(wybrany=="Puszczanie latawca")||(wybrany=="Wyjazd na dzia³kê/wieœ")||(wybrany=="Opalanie")){
+		else if(wybrany.equals("Zoo")){
+			f="Ogród+zoologogiczny";
+		}
+		else if((wybrany.equals("Ogl¹danie wschodu s³oñca"))||(wybrany.equals("Ogl¹danie zachodu s³oñca"))||(wybrany.equals("Obserwowanie gwiazd"))
+				||(wybrany.equals("Obserwowanie chmur"))||(wybrany.equals("Puszczanie latawca"))||(wybrany.equals("Wyjazd na dzia³kê/wieœ"))||(wybrany.equals("Opalanie"))){
 			f="1";
 		}
 		else{

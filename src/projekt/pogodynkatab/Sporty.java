@@ -361,34 +361,34 @@ public class Sporty extends ListActivity {
 	public String fraza(String wybrany){
 		String f ="";
 		
-		if(wybrany=="Rower"){
+		if(wybrany.equals("Rower")){
 			f = "Œcie¿ka+rowerowa";
 		}
-		else if(wybrany=="Siatkówka"){
+		else if(wybrany.equals("Siatkówka")){
 			f = "Boisko+siatkówka";
 		}
-		else if(wybrany=="Koszykówka"){
+		else if(wybrany.equals("Koszykówka")){
 			f = "Boisko+koszykówka";
 		}
-		else if(wybrany=="Pi³ka no¿na"){
+		else if(wybrany.equals("Pi³ka no¿na")){
 			f = "Boisko+do+pi³ki+no¿nej";
 		}
-		else if(wybrany=="Wspinaczka"){
+		else if(wybrany.equals("Wspinaczka")){
 			f = "Œciana+wspinaczkowa";
 		}
-		else if(wybrany=="Tenis"){
-			f = "Boisko+tenis";
+		else if(wybrany.equals("Tenis")){
+			f = "Kort+tenisowy";
 		}
-		else if(wybrany=="Jazda konna"){
+		else if(wybrany.equals("Jazda konna")){
 			f = "Stadnina+koni";
 		}
-		else if((wybrany=="£y¿wy")||(wybrany=="Hokej")){
+		else if((wybrany.equals("£y¿wy"))||(wybrany.equals("Hokej"))){
 			f = "Lodowisko";
 		}
-		else if(wybrany=="Narciarstwo"){
+		else if(wybrany.equals("Narciarstwo")){
 			f = "Stok+narciarski";
 		}
-		else if(wybrany=="Trening sztuk walki"){
+		else if(wybrany.equals("Trening sztuk walki")){
 			f = "Szko³a+sztuk+walki";
 		}
 		else{			
