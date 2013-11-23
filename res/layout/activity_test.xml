@@ -28,16 +28,16 @@
     <EditText
         android:id="@+id/pogoda"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/miasto"
+        android:layout_marginTop="15dp"
         android:ems="10"
-        android:hint="Pogoda"
-        android:text="pogodnie" />
+        android:hint="Pogoda" />
 
     <EditText
         android:id="@+id/temperatura"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/pogoda"
         android:layout_below="@+id/pogoda"
         android:ems="10"
@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/wiatr"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/temperatura"
         android:layout_below="@+id/temperatura"
         android:ems="10"
@@ -57,7 +57,7 @@
     <Button
         android:id="@+id/sporty"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/wiatr"
         android:layout_alignParentBottom="true"
         android:onClick="sporty"
@@ -66,7 +66,7 @@
     <EditText
         android:id="@+id/dzienTygodnia"
         android:layout_width="60dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/wiatr"
         android:layout_alignRight="@+id/wiatr"
         android:layout_below="@+id/wiatr"
@@ -77,7 +77,7 @@
     <EditText
         android:id="@+id/dzien"
         android:layout_width="60dp"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/dzienTygodnia"
         android:ems="10"
@@ -87,7 +87,7 @@
     <EditText
         android:id="@+id/rok"
         android:layout_width="60dp"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/dzien"
         android:layout_alignRight="@+id/dzienTygodnia"
         android:layout_below="@+id/dzienTygodnia"
@@ -99,7 +99,7 @@
     <EditText
         android:id="@+id/godzina"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/dzien"
         android:layout_below="@+id/dzien"
         android:layout_toLeftOf="@+id/miesiac"
@@ -110,7 +110,7 @@
     <EditText
         android:id="@+id/minuty"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignRight="@+id/miesiac"
         android:layout_below="@+id/dzien"
         android:layout_toRightOf="@+id/dzien"
@@ -118,64 +118,24 @@
         android:inputType="number"
         android:text="00" />
 
+    <Button
+        android:id="@+id/ubrania"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/rok"
+        android:layout_alignParentBottom="true"
+        android:onClick="ubrania"
+        android:text="Ubrania" />
+
     <EditText
         android:id="@+id/miesiac"
         android:layout_width="60dp"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/dzien"
         android:layout_alignTop="@+id/rok"
         android:layout_toRightOf="@+id/sporty"
         android:ems="10"
         android:inputType="number" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/godzina"
-        android:layout_alignRight="@+id/rok"
-        android:layout_below="@+id/godzina"
-        android:text="Godzina wschodu/zachodu słońca" />
-
-    <EditText
-        android:id="@+id/wschod"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignRight="@+id/dzien"
-        android:layout_below="@+id/textView1"
-        android:ems="10"
-        android:inputType="number"
-        android:text="6" />
-
-    <EditText
-        android:id="@+id/zachod"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_alignLeft="@+id/miesiac"
-        android:layout_alignRight="@+id/minuty"
-        android:layout_below="@+id/textView1"
-        android:ems="10"
-        android:inputType="number"
-        android:text="18" />
-
-    <Button
-        android:id="@+id/ubrania"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_alignLeft="@+id/zachod"
-        android:layout_alignParentBottom="true"
-        android:onClick="ubrania"
-        android:text="Ubrania" />
-
-    <Button
-        android:id="@+id/wypoczynek"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/ubrania"
-        android:onClick="wypoczynek"
-        android:text="Wypoczynek" />
 
 </RelativeLayout>
 

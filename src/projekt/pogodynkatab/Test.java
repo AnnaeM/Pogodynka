@@ -58,22 +58,6 @@ public class Test extends Activity {
 		startActivity(intent);
 		
 	}
-	
-	public void wypoczynek(View view){
-		
-		try {
-			wlozDane();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Intent intent = new Intent(this, Wypoczynek.class);
-		intent.putExtra("Pogoda", testowy.toString());
-		
-		startActivity(intent);
-		
-	}
 
 	public void wlozDane() throws JSONException {
 
@@ -88,9 +72,7 @@ public class Test extends Activity {
 		EditText rok = (EditText) findViewById(R.id.rok);
 		EditText godzina = (EditText) findViewById(R.id.godzina);
 		EditText minuty = (EditText) findViewById(R.id.minuty);
-		
-		EditText wschod = (EditText) findViewById(R.id.wschod);
-		EditText zachod = (EditText) findViewById(R.id.zachod);
+
 		
 		testowy.put("city", miasto.getText().toString());
 
@@ -106,8 +88,6 @@ public class Test extends Activity {
 		testowy.put("longitude","22.39999962");
 		testowy.put("feelslike_c", temp.getText());
 		testowy.put("weather", pogoda.getText().toString());
-		testowy.put("wschod", wschod.getText());
-		testowy.put("zachod", zachod.getText());
 		
 		if(wiatr.getText()==null){
 			testowy.put("wind_mph", 0);

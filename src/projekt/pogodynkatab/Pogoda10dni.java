@@ -1,22 +1,61 @@
 package projekt.pogodynkatab;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.ListView;
 
 public class Pogoda10dni extends Activity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pogoda10dni);
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.pogoda10dni, menu);
+		getMenuInflater().inflate(R.menu.pogoda_godz, menu);
 		return true;
 	}
+	
+	private List<OkresowaPogoda> wielodniowa= new ArrayList<OkresowaPogoda>();
+    
+	
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+         
+        // Set the View layer
+        setContentView(R.layout.listview);
+        setTitle("TestIconizedListView");
+ 
+        // Create Parser for raw/countries.xml
+        ListParser listParser = new ListParser("dzienna");
+        //InputStream inputStream = getResources().openRawResource(
+        //        R.raw.countries); 
+          
+        // Parse the inputstream 
+        listParser.parse();
+ 
+        // Get Countries
+        List<OkresowaPogoda> listaPogody = listParser.getList();
+         
+         
+        // Create a customized ArrayAdapter
+        ListAdapter adapter = new ListAdapter(
+                getApplicationContext(), R.layout.listitem, listaPogody);
+         
+        // Get reference to ListView holder
+        ListView lv = (ListView) this.findViewById(R.id.countryLV);
+         
+        // Set the ListView adapter
+        lv.setAdapter(adapter);
+    }
+    
+    public static List<ForecastDay> getList()
+    {
+        return ForecastActivity._mainActivity.txt10day;
+    }
+
 
 }

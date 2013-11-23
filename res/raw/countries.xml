@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<countries>
+        <country name="pogodnie" abbreviation="1" region="Asia" />
+        <country name="przewaga chmur" abbreviation="2" region="Europe" />
+        <country name="obloki zanikajace" abbreviation="3" region="Europe" />
+        <country name="snieg" abbreviation="4" region="S. America" />
+        <country name="niewielkie zachmurzenie " abbreviation="5" region="N. America" />
+        <country name="deszcz" abbreviation="6" region="Asia" />
+        <country name="lekki deszcz" abbreviation="7" region="Europe" />
+        <country name="pochmurno" abbreviation="8" region="Europe" />
+        <country name="platki mgly" abbreviation="9" region="Europe" />
+        <country name="lekkie przelotne deszcze " abbreviation="10" region="Asia" />
+        <country name="lekka mzawka" abbreviation="11" region="Asia" />
+        <country name="zamglenia" abbreviation="12" region="Asia" />
+        <country name="mzawka" abbreviation="13" region="Europe" />
+        <country name="mgla" abbreviation="14" region="Asia" />
+        <country name="lekka mgla" abbreviation="15" region="Europe" />
+        <country name="czeciowe zamglenia" abbreviation="16" region="Europe" />
+        <country name="plytka mgla" abbreviation="17" region="Europe" />
+
+  
+</countries>

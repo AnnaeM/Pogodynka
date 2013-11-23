@@ -378,12 +378,13 @@ public class ForecastActivity extends TabActivity {
 		 * OBRABIANIE DANYCH HOURLY
 		 */
 		JSONArray hourly = jObject.getJSONArray("hourly_forecast");
-		HourlyForecast hf = new HourlyForecast();
+		
 		this.hourlyForecast = new ArrayList<HourlyForecast>();
 
 		for (int i = 0; i < hourly.length(); i++) {
 			Log.i("HOURLY " + String.valueOf(i), String.valueOf(i));
 
+			HourlyForecast hf = new HourlyForecast();
 			JSONObject pom3 = new JSONObject();
 			JSONObject pom2 = new JSONObject();
 			pom2 = hourly.getJSONObject(i);
@@ -403,6 +404,7 @@ public class ForecastActivity extends TabActivity {
 			hf.monthAbbrev = pom3.getString("month_name_abbrev");
 			hf.weekdayNameAbbrev = pom3.getString("weekday_name_abbrev");
 			hf.weekdayNameNight = pom3.getString("weekday_name_night");
+			hf.weekday_name = pom3.getString("weekday_name");
 			hf.pretty = pom3.getString("pretty");
 			hf.condition = pom2.getString("condition");
 			pom3 = pom2.getJSONObject("dewpoint");

@@ -9,6 +9,7 @@ public class HourlyForecast {
 	public String pretty;
 	public String weekdayNameAbbrev; //skrót dnia tygodnia
 	public String weekdayNameNight; //na noc i wieczór
+	public String weekday_name;
 	//public String tz;// timezone
 	//public String ampm;
 	//public String epoch; //czas unixowy
