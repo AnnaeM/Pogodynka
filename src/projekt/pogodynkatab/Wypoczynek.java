@@ -128,7 +128,7 @@ public class Wypoczynek extends ListActivity {
 				dzienTygodnia = jObject.getString("weekDay");
 
 				poraRoku();
-				
+
 				wyborWypoczynku();
 
 			} catch (JSONException e) {
@@ -155,29 +155,33 @@ public class Wypoczynek extends ListActivity {
 				// Toast.makeText(getApplicationContext(),
 				// ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 
-				/*String uri = "https://maps.google.pl/maps?q=" + city + "+"
-						+ ((TextView) view).getText();
-				Log.i("URL", uri);
-				Intent intent = new Intent(android.content.Intent.ACTION_VIEW,Uri.parse(uri));
-				intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-				startActivity(intent);
-				*/
-				/*String uri = "https://maps.google.pl/maps?q=" + city + "+"
-						+ ((TextView) view).getText();
-				Log.i("URL", uri);
-				startActivity(new Intent(android.content.Intent.ACTION_VIEW,
-						Uri.parse(uri)));*/
-				
-				String wyszukiwanie = fraza((String) ((TextView) view).getText());
-				
-				if(wyszukiwanie!="1"){
-				String uri = "https://maps.google.pl/maps?q=" + city + "+"
-						+ wyszukiwanie;
-				Log.i("URL", uri);
-				startActivity(new Intent(android.content.Intent.ACTION_VIEW,
-						Uri.parse(uri)));}
-				
-				
+				/*
+				 * String uri = "https://maps.google.pl/maps?q=" + city + "+" +
+				 * ((TextView) view).getText(); Log.i("URL", uri); Intent intent
+				 * = new
+				 * Intent(android.content.Intent.ACTION_VIEW,Uri.parse(uri));
+				 * intent.setClassName("com.google.android.apps.maps",
+				 * "com.google.android.maps.MapsActivity");
+				 * startActivity(intent);
+				 */
+				/*
+				 * String uri = "https://maps.google.pl/maps?q=" + city + "+" +
+				 * ((TextView) view).getText(); Log.i("URL", uri);
+				 * startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+				 * Uri.parse(uri)));
+				 */
+
+				String wyszukiwanie = fraza((String) ((TextView) view)
+						.getText());
+
+				if (wyszukiwanie != "1") {
+					String uri = "https://maps.google.pl/maps?q=" + city + "+"
+							+ wyszukiwanie;
+					Log.i("URL", uri);
+					startActivity(new Intent(
+							android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+				}
+
 			}
 
 		});
@@ -263,9 +267,12 @@ public class Wypoczynek extends ListActivity {
 			ladnaPogoda();
 		else if (pogoda.equals("czêœciowe zamglenia"))
 			ladnaPogoda();
+		else if (pogoda2.equals("gêsta mg³a"))
+			innaPogoda(poraDnia);
 		else
-			lista.add("Nieznany rodzaj pogody");
-
+			//lista.add("Nieznany rodzaj pogody");
+			innaPogoda(poraDnia);
+		
 		zalezne();
 	}
 
@@ -281,6 +288,17 @@ public class Wypoczynek extends ListActivity {
 	}
 
 	public void deszczowaPogoda() {
+		podDachem();
+
+	}
+
+	public void innaPogoda(char poraDnia) {
+		// gêsta mgla itd
+		if ((temp > -30) && (temp < 35)) {
+			lista.add("Spacer");
+			lista.add("Spotkanie z przyjació³mi");
+			lista.add("Spacer z psem");
+		}
 		podDachem();
 
 	}
@@ -313,31 +331,31 @@ public class Wypoczynek extends ListActivity {
 			lista.add("Zakupy");
 			lista.add("Zajêcia plastyczne");
 			lista.add("Zajêcia muzyczne");
-			
-			if ((poraDnia == 'w') || (poraDnia == 'n') || (poraDnia == 'g')) {
-				lista.add("Wyjœcie na imprezê");
-				lista.add("Randka w ciemno");
-			}
 		}
+		if ((poraDnia == 'w') || (poraDnia == 'n') || (poraDnia == 'g')) {
+			lista.add("Wyjœcie na imprezê");
+			lista.add("Randka w ciemno");
+		}
+
 	}
 
 	public void okazjonalne() { // dodaæ warunki
 		lista.add("Koncert");
-		lista.add("Cyrk");
+		//lista.add("Cyrk");
 		// lista.add("IdŸ na wydarzenie w mieœcie");
 	}
 
 	public void zalezne() {
 
 		int wschodSlonca, zachodSlonca;
-		
-		if (ForecastActivity._mainActivity != null){
-		wschodSlonca = ForecastActivity._mainActivity.astronomia.sunrise.hour;
-		zachodSlonca = ForecastActivity._mainActivity.astronomia.sunset.hour;}
-		else{
-		wschodSlonca = Integer.parseInt("wschod");
-		zachodSlonca = Integer.parseInt("zachod");
-			
+
+		if (ForecastActivity._mainActivity != null) {
+			wschodSlonca = ForecastActivity._mainActivity.astronomia.sunrise.hour;
+			zachodSlonca = ForecastActivity._mainActivity.astronomia.sunset.hour;
+		} else {
+			wschodSlonca = Integer.parseInt("wschod");
+			zachodSlonca = Integer.parseInt("zachod");
+
 		}
 
 		Log.i("Zachod slonca", String.valueOf(zachodSlonca));
@@ -373,43 +391,47 @@ public class Wypoczynek extends ListActivity {
 				lista.add("Puszczanie latawca");
 
 			if ((godzina < zachodSlonca) && (godzina > wschodSlonca)) {
-				
+
 				lista.add("Wyjazd na dzia³kê/wieœ");
 				lista.add("Wyprawa do lasu");
-				if (pogoda2.equals("pogodnie")){
+				if (pogoda2.equals("pogodnie")) {
 					lista.add("Opalanie");
-					lista.add("Piknik");}
+					lista.add("Piknik");
+				}
 			}
 		}
 
-
 	}
-	
-	public String fraza(String wybrany){
-		String f ="";
-		
-		if((wybrany.equals("Spacer"))||(wybrany.equals("Spacer z psem"))||(wybrany.equals("Fotografowanie"))||(wybrany.equals("Rysowanie krajobrazu"))||(wybrany.equals("Piknik"))){
+
+	public String fraza(String wybrany) {
+		String f = "";
+
+		if ((wybrany.equals("Spacer")) || (wybrany.equals("Spacer z psem"))
+				|| (wybrany.equals("Fotografowanie"))
+				|| (wybrany.equals("Rysowanie krajobrazu"))
+				|| (wybrany.equals("Piknik"))) {
 			f = "Park";
-		}
-		else if((wybrany.equals("Wyjœcie na imprezê"))||(wybrany.equals("Randka w ciemno"))){
-			f="Club";		
-		}
-		else if(wybrany.equals("Zakupy")){
-			f="Centrum+handlowe";
-		}
-		else if(wybrany.equals("Zoo")){
-			f="Ogród+zoologogiczny";
-		}
-		else if((wybrany.equals("Ogl¹danie wschodu s³oñca"))||(wybrany.equals("Ogl¹danie zachodu s³oñca"))||(wybrany.equals("Obserwowanie gwiazd"))
-				||(wybrany.equals("Obserwowanie chmur"))||(wybrany.equals("Puszczanie latawca"))||(wybrany.equals("Wyjazd na dzia³kê/wieœ"))||(wybrany.equals("Opalanie"))){
-			f="1";
-		}
-		else{
-			wybrany = wybrany.replace(' ','+');		
+		} else if ((wybrany.equals("Wyjœcie na imprezê"))
+				|| (wybrany.equals("Randka w ciemno"))) {
+			f = "Club";
+		} else if (wybrany.equals("Zakupy")) {
+			f = "Centrum+handlowe";
+		} else if (wybrany.equals("Zoo")) {
+			f = "Ogród+zoologogiczny";
+		} else if ((wybrany.equals("Ogl¹danie wschodu s³oñca"))
+				|| (wybrany.equals("Ogl¹danie zachodu s³oñca"))
+				|| (wybrany.equals("Obserwowanie gwiazd"))
+				|| (wybrany.equals("Obserwowanie chmur"))
+				|| (wybrany.equals("Puszczanie latawca"))
+				|| (wybrany.equals("Wyjazd na dzia³kê/wieœ"))
+				|| (wybrany.equals("Opalanie"))) {
+			f = "1";
+		} else {
+			wybrany = wybrany.replace(' ', '+');
 			f = wybrany;
 		}
-		
-		return f;	
+
+		return f;
 	}
 
 }

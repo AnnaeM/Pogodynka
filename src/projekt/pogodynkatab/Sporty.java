@@ -220,8 +220,11 @@ public class Sporty extends ListActivity {
 			ladnaPogoda(poraDnia);
 		else if (pogoda2.equals("czêœciowe zamglenia"))
 			ladnaPogoda(poraDnia);
+		else if (pogoda2.equals("gêsta mg³a"))
+			innaPogoda(poraDnia);
 		else
-			listArray.add("Nieznany rodzaj pogody");
+			//listArray.add("Nieznany rodzaj pogody");
+			innaPogoda(poraDnia);
 
 	}
 
@@ -278,6 +281,17 @@ public class Sporty extends ListActivity {
 	public void deszczowaPogoda(char poraDnia) {
 		naHali();
 	}
+	
+	public void innaPogoda(char poraDnia){
+		//gêsta mgla itd
+		if((temp > -30) && (temp < 35)){
+			listArray.add("Bieganie");
+			listArray.add("Joga");
+			listArray.add("Nordic walking");
+		}
+		naHali();
+		
+	}
 
 	public void standardowe() {
 		listArray.add("Bieganie");
@@ -306,6 +320,7 @@ public class Sporty extends ListActivity {
 			listArray.add("Trening sztuk walki");
 			listArray.add("Basen");
 			listArray.add("Ping-pong");
+			listArray.add("Gocarty");
 		}
 	}
 
@@ -314,8 +329,7 @@ public class Sporty extends ListActivity {
 		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w')) {
 			if (poraRoku != 'z') {
 				listArray.add("BMX");
-				listArray.add("Quady");
-				listArray.add("Gocardy");
+				listArray.add("Quady");				
 				listArray.add("Golf");
 				listArray.add("Jazda konna");
 				listArray.add("Paintball");

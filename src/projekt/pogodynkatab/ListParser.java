@@ -1,19 +1,14 @@
 package projekt.pogodynkatab;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import android.util.Log;
 
@@ -24,13 +19,13 @@ public class ListParser {
      
     private DocumentBuilderFactory factory;
     private DocumentBuilder builder;
-    private final List<OkresowaPogoda> list;
+    private final List<PogodaZListy> list;
     private List<HourlyForecast> godzinowa;
     private List<ForecastDay> wielodniowa;
     String rodzajListy;
  
     public ListParser(String rodzajListy) {
-        this.list = new ArrayList<OkresowaPogoda>();
+        this.list = new ArrayList<PogodaZListy>();
         this.rodzajListy = rodzajListy;
     }
  
@@ -43,7 +38,7 @@ public class ListParser {
         return nodeValue;
     }
  
-    public List<OkresowaPogoda> getList() {
+    public List<PogodaZListy> getList() {
         return this.list;
     }
  
@@ -70,12 +65,22 @@ public class ListParser {
             	else{
             		godzina = pog.czas.hour+":"+pog.czas.minute+"0";}
             	
+            	String warunkiPog = pog.condition;
+            	char first = Character.toUpperCase(warunkiPog.charAt(0));
+            	String warunkiUpperCase = first + warunkiPog.substring(1);
+            	
             	final String tekst = godzina+", "+pog.weekday_name+" "+
-            			data+"\n"+pog.condition+"\nTemp. "+pog.tempC+"°C";
+            			data+"\n"+warunkiUpperCase+"\nTemp. "+pog.tempC+"°C";
             	final String nazwaIkony = pog.icon;
             	
+            	String folder;
+            	if((pog.czas.hour<=6)||(pog.czas.hour>=21))
+            			folder="night/";
+            	else  
+            		folder="day/";
+            	
                 // Construct Country object
-                OkresowaPogoda pogoda = new OkresowaPogoda(tekst,nazwaIkony + FILE_EXTENSION);
+                PogodaZListy pogoda = new PogodaZListy(tekst, nazwaIkony + FILE_EXTENSION, folder);
                 Log.i(String.valueOf(pog.czas.hour), pog.condition);
                 
                  
@@ -90,11 +95,30 @@ public class ListParser {
             		ForecastDay pog = new ForecastDay();
                 	pog = wielodniowa.get(i);
                 	
-                	final String tekst = pog.title+":\n" + pog.fcttextMetric;
+                	String metric =  pog.fcttextMetric;
+                	
+
+                	metric = metric.replace("Light Wind","Lekki wiatr");
+                	
+                //	Calendar c = Calendar.getInstance(); 
+                	//int day = c.DATE;
+                //	String data = String.valueOf(c.DAY_OF_MONTH)+"."+String.valueOf(c.MONTH)+"."+String.valueOf(c.YEAR);
+                	
+                	
+                	
+                	final String tekst = pog.title+":\n" + metric;
                 	final String nazwaIkony = pog.icon;
                 	
+                	String folder;
+                	//if((pog.czas.hour<=6)||(pog.czas.hour>=21))
+                	if(pog.title.contains("wieczór i noc"))	              		
+                			folder="night/";
+                	             	                	
+                	else  
+                		folder="day/";
+                	
                     // Construct Country object
-                    OkresowaPogoda pogoda = new OkresowaPogoda(tekst,nazwaIkony + FILE_EXTENSION);
+                    PogodaZListy pogoda = new PogodaZListy(tekst, nazwaIkony + FILE_EXTENSION, folder);
                
                     // Add to list
                     this.list.add(pogoda);}}

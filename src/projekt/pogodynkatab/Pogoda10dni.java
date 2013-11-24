@@ -17,7 +17,7 @@ public class Pogoda10dni extends Activity {
 		return true;
 	}
 	
-	private List<OkresowaPogoda> wielodniowa= new ArrayList<OkresowaPogoda>();
+	private List<PogodaZListy> wielodniowa= new ArrayList<PogodaZListy>();
     
 	
     /** Called when the activity is first created. */
@@ -38,7 +38,7 @@ public class Pogoda10dni extends Activity {
         listParser.parse();
  
         // Get Countries
-        List<OkresowaPogoda> listaPogody = listParser.getList();
+        List<PogodaZListy> listaPogody = listParser.getList();
          
          
         // Create a customized ArrayAdapter

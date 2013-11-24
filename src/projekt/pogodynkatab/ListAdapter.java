@@ -15,71 +15,62 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
  
-public class ListAdapter extends ArrayAdapter<OkresowaPogoda> {
+public class ListAdapter extends ArrayAdapter<PogodaZListy> {
     private static final String tag = "CountryArrayAdapter";
     private static final String ASSETS_DIR = "images/";
     private Context context;
-    private ImageView countryIcon;
-    private TextView countryName;
-    private TextView countryAbbrev;
-    private List<OkresowaPogoda> countries = new ArrayList<OkresowaPogoda>();
+    private ImageView icon;
+    private TextView name;
+    private List<PogodaZListy> lista = new ArrayList<PogodaZListy>();
  
     public ListAdapter(Context context, int textViewResourceId,
-            List<OkresowaPogoda> objects) {
+            List<PogodaZListy> objects) {
         super(context, textViewResourceId, objects);
         this.context = context;
-        this.countries = objects;
+        this.lista = objects;
     }
  
     public int getCount() {
-        return this.countries.size();
+        return this.lista.size();
     }
  
-    public OkresowaPogoda getItem(int index) {
-        return this.countries.get(index);
+    public PogodaZListy getItem(int index) {
+        return this.lista.get(index);
     }
  
     private class viewHolder{
 
     	ImageView image;
     	TextView tekst;
-    	//TextView tekst2;
     	
     }
     public View getView(int position, View convertView, ViewGroup parent) {
         viewHolder holder = null;	
     	View row = null;
-    	//View vi = convertView;
-    	//Country country = null;
-    	OkresowaPogoda elementListy = new OkresowaPogoda();
+    	PogodaZListy elementListy = new PogodaZListy();
     	
         if (row == null) {
         	
         	holder = new viewHolder();
             // ROW INFLATION
-        	
-        //	Log.d(tag, "Starting XML Row Inflation ... ");
             LayoutInflater inflater = (LayoutInflater) this.getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             
             row = inflater.inflate(R.layout.listitem, null);
            
-        //    Log.d(tag, "Successfully completed XML Row Inflation!");
             
             
            convertView = inflater.inflate(R.layout.listview, null);   
-            // Get item
+         // Get item
         elementListy = getItem(position);
          
-        countryIcon = (ImageView) row.findViewById(R.id.icon);
-         holder.image = countryIcon;
-        countryName = (TextView) row.findViewById(R.id.text);
-        holder.tekst = countryName;
-      //  countryAbbrev = (TextView) row.findViewById(R.id.country_abbrev);
-      //  holder.tekst2 = countryAbbrev;
+        icon = (ImageView) row.findViewById(R.id.icon);
+         holder.image = icon;
+        name = (TextView) row.findViewById(R.id.text);
+        holder.tekst = name;
        
         holder.tekst.setText("cos.toString()"); 
-      //  holder.tekst2.setText("cos2.toString()");
+
         
         
         convertView.setTag(holder); 
@@ -89,19 +80,15 @@ public class ListAdapter extends ArrayAdapter<OkresowaPogoda> {
         	
         	holder= (viewHolder) convertView.getTag();
         }
+ 
+        name.setText(elementListy.name);
         
-        //Set country name
-        countryName.setText(elementListy.name);
-         
-        // Set country icon usign File path
-       // String imgFilePath = ASSETS_DIR + country.resourceId; 
-        String imgFilePath = ASSETS_DIR + elementListy.resourceId; 
+        String imgFilePath = ASSETS_DIR +elementListy.folder+ elementListy.resourceId; 
         try {
         	Bitmap bitmap = BitmapFactory.decodeStream(this.context.getResources().getAssets()
                     .open(imgFilePath));
-           // countryIcon.setImageBitmap(bitmap);
             holder.image.setImageBitmap(bitmap);
-        	Log.i("Obrazki","Dodano obrazek");        	
+        //	Log.i("Obrazki","Dodano obrazek");        	
         	
         } catch (IOException e) {
             e.printStackTrace();

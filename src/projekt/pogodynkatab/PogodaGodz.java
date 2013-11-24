@@ -20,7 +20,7 @@ public class PogodaGodz extends Activity {
 		return true;
 	}
 	
-	private List<OkresowaPogoda> godzinowa= new ArrayList<OkresowaPogoda>();
+	private List<PogodaZListy> godzinowa= new ArrayList<PogodaZListy>();
     
 	
     /** Called when the activity is first created. */
@@ -41,7 +41,7 @@ public class PogodaGodz extends Activity {
         listParser.parse();
  
         // Get Countries
-        List<OkresowaPogoda> listaPogody = listParser.getList();
+        List<PogodaZListy> listaPogody = listParser.getList();
          
          
         // Create a customized ArrayAdapter
