@@ -31,8 +31,6 @@ public class Pogoda10dni extends Activity {
  
         // Create Parser for raw/countries.xml
         ListParser listParser = new ListParser("dzienna");
-        //InputStream inputStream = getResources().openRawResource(
-        //        R.raw.countries); 
           
         // Parse the inputstream 
         listParser.parse();

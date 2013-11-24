@@ -46,7 +46,7 @@ public class ForecastActivity extends TabActivity {
 	public boolean pobrano;
 	public String aktualnaGodzina;
 	public Astronomy astronomia;
-	
+
 	public static ForecastActivity _mainActivity;
 
 	@Override
@@ -399,7 +399,7 @@ public class ForecastActivity extends TabActivity {
 
 			Log.i("MONTH DAY", String.valueOf(pom.monthDay));
 			hf.czas = pom;
-
+			
 			hf.monAbbrev = pom3.getString("mon_abbrev");
 			hf.monthAbbrev = pom3.getString("month_name_abbrev");
 			hf.weekdayNameAbbrev = pom3.getString("weekday_name_abbrev");
@@ -709,24 +709,6 @@ public class ForecastActivity extends TabActivity {
 		 */
 	}
 
-	/*
-	 * @Override public boolean onCreateOptionsMenu(Menu menu) { // Inflate the
-	 * menu; this adds items to the action bar if it is present.
-	 * getMenuInflater().inflate(R.menu.forecast, menu); return true; }
-	 * 
-	 * public void doSportow(View view) throws JSONException{ Intent intent =
-	 * new Intent(this, Sporty.class); intent.putExtra("Pogoda",
-	 * doAktywnosci.toString()); startActivity(intent); }
-	 * 
-	 * public void doWypoczynku(View view) { Intent intent = new Intent(this,
-	 * Wypoczynek.class); startActivity(intent);
-	 * 
-	 * }
-	 * 
-	 * public void doUbran(View view) throws JSONException{ Intent intent = new
-	 * Intent(this, Ubrania.class); intent.putExtra("Pogoda",
-	 * doAktywnosci.toString()); startActivity(intent); }
-	 */
 
 }
 

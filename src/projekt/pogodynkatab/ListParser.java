@@ -4,21 +4,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-
+import android.text.format.Time;
 import android.util.Log;
 
 public class ListParser {
 	 
-    private static final String tag = "ListParser";
     private static final String FILE_EXTENSION= ".png";
-     
-    private DocumentBuilderFactory factory;
-    private DocumentBuilder builder;
     private final List<PogodaZListy> list;
     private List<HourlyForecast> godzinowa;
     private List<ForecastDay> wielodniowa;
@@ -28,25 +19,12 @@ public class ListParser {
         this.list = new ArrayList<PogodaZListy>();
         this.rodzajListy = rodzajListy;
     }
- 
-    private String getNodeValue(NamedNodeMap map, String key) {
-        String nodeValue = null;
-        Node node = map.getNamedItem(key);
-        if (node != null) {
-            nodeValue = node.getNodeValue();
-        }
-        return nodeValue;
-    }
- 
+
     public List<PogodaZListy> getList() {
         return this.list;
     }
  
-    /**
-     * Parse XML file containing body part X/Y/Description
-     *
-     * @param inStream
-     */
+
     public void parse() {
     	
     	if(rodzajListy.equals("godzinowa")){
@@ -88,6 +66,7 @@ public class ListParser {
                 this.list.add(pogoda);}}
             
             else{
+            	
             	wielodniowa = Pogoda10dni.getList();          	
             	int length = wielodniowa.size();
             	
@@ -104,13 +83,14 @@ public class ListParser {
                 	//int day = c.DATE;
                 //	String data = String.valueOf(c.DAY_OF_MONTH)+"."+String.valueOf(c.MONTH)+"."+String.valueOf(c.YEAR);
                 	
-                	
+                //	Time now = new Time();
+                //	now.setToNow();
+                //	String data = String.valueOf(now.MONTH_DAY)+"."+String.valueOf(now.MONTH)+"."+String.valueOf(now.YEAR);
                 	
                 	final String tekst = pog.title+":\n" + metric;
                 	final String nazwaIkony = pog.icon;
                 	
                 	String folder;
-                	//if((pog.czas.hour<=6)||(pog.czas.hour>=21))
                 	if(pog.title.contains("wieczór i noc"))	              		
                 			folder="night/";
                 	             	                	

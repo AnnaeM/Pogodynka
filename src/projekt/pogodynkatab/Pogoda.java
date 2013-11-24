@@ -20,6 +20,7 @@ public class Pogoda extends Activity {
 	public TextView dzisiaj;
 	public ForecastDay dzien;
 	public TextView pogoda1;
+	 private static final String ASSETS_DIR = "images/";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class Pogoda extends Activity {
 		setContentView(R.layout.activity_pogoda);
 		if (ForecastActivity._mainActivity != null) {
 			ikonka = (ImageView) findViewById(R.id.ikonkaIV);
-			URL url;
+		/*	URL url;
 			Bitmap bmp;
 			try {
 				url = new URL(ForecastActivity._mainActivity.cndtns.iconURL);
@@ -40,7 +41,9 @@ public class Pogoda extends Activity {
 			} catch (IOException ee) {
 				// TODO Auto-generated catch block
 				ee.printStackTrace();
-			}
+			}*/
+			
+			
 			lokacja = (TextView) findViewById(R.id.lokacja2TB);
 			dzisiaj = (TextView) this.findViewById(R.id.data);
 			try {
@@ -87,6 +90,25 @@ public class Pogoda extends Activity {
 						+ "\nWilgotnoœæ "
 						+ ForecastActivity._mainActivity.cndtns.relativeHumidity;
 				pogoda1.setText(pogoda);
+				
+				String folder;
+				if((Integer.parseInt(dzien.data.hour)<6)||(Integer.parseInt(dzien.data.hour)>21))
+					folder="night/";
+				else
+					folder="day/";
+				
+				 String imgFilePath = ASSETS_DIR +folder+ ForecastActivity._mainActivity.cndtns.icon+".png"; 
+			        try {
+			        	Bitmap bitmap = BitmapFactory.decodeStream(getApplicationContext().getResources().getAssets()
+			                    .open(imgFilePath));
+			            ikonka.setImageBitmap(bitmap);
+			        //	Log.i("Obrazki","Dodano obrazek");        	
+			        	
+			        } catch (IOException e) {
+			            e.printStackTrace();
+			            Log.i("Obrazki","B³¹d");
+			            
+			        }
 			} catch (Exception ex) {
 				Log.i(ex.getMessage(), ex.toString());
 			}

@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
  
 public class ListAdapter extends ArrayAdapter<PogodaZListy> {
-    private static final String tag = "CountryArrayAdapter";
     private static final String ASSETS_DIR = "images/";
     private Context context;
     private ImageView icon;
@@ -69,10 +68,7 @@ public class ListAdapter extends ArrayAdapter<PogodaZListy> {
         name = (TextView) row.findViewById(R.id.text);
         holder.tekst = name;
        
-        holder.tekst.setText("cos.toString()"); 
-
-        
-        
+        holder.tekst.setText("cos.toString()");      
         convertView.setTag(holder); 
         
         }
@@ -95,9 +91,7 @@ public class ListAdapter extends ArrayAdapter<PogodaZListy> {
             Log.i("Obrazki","B³¹d");
             
         }
-         
-        // Set country abbreviation
-      //  countryAbbrev.setText(country.abbreviation);
+
         return row;
     }
     

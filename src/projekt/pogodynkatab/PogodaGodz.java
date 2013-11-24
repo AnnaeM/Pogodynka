@@ -1,6 +1,5 @@
 package projekt.pogodynkatab;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +33,7 @@ public class PogodaGodz extends Activity {
  
         // Create Parser for raw/countries.xml
         ListParser listParser = new ListParser("godzinowa");
-        //InputStream inputStream = getResources().openRawResource(
-        //        R.raw.countries); 
-          
+        
         // Parse the inputstream 
         listParser.parse();
  
