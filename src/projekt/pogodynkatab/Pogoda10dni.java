@@ -44,7 +44,7 @@ public class Pogoda10dni extends Activity {
                 getApplicationContext(), R.layout.listitem, listaPogody);
          
         // Get reference to ListView holder
-        ListView lv = (ListView) this.findViewById(R.id.countryLV);
+        ListView lv = (ListView) this.findViewById(R.id.listLV);
          
         // Set the ListView adapter
         lv.setAdapter(adapter);

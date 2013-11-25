@@ -13,7 +13,7 @@
  
     <TextView
         android:id="@+id/text"
-        android:text="Country Name"
+        android:text="Opis"
         android:paddingLeft="10dip"
         android:layout_weight="0.5"
         android:layout_gravity="center"

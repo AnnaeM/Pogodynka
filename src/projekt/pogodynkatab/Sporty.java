@@ -65,17 +65,7 @@ public class Sporty extends ListActivity {
 					Log.i("Pogoda", pogoda.toString());
 					if (pogoda.equals("")) {
 						// bo w Pu³awach nie ma pogody :c
-						String pogodaAwaryjna;
-						pogodaAwaryjna = ForecastActivity._mainActivity.txt10day
-								.get(0).fcttext.toString();
-						Log.i("Pusta pogoda", pogodaAwaryjna);
-
-						int i = 0;
-						while (pogodaAwaryjna.charAt(i) != '.') {
-							pogoda = pogoda + pogodaAwaryjna.charAt(i);
-							i++;
-
-						}
+						pogoda = ForecastActivity._mainActivity.hourlyForecast.get(0).condition;					
 						Log.i("Pogoda awaryjna", pogoda);
 					}
 					wind = ForecastActivity._mainActivity.current_observation
@@ -113,38 +103,7 @@ public class Sporty extends ListActivity {
 		}
 
 		else {
-			try {
-				jObject = new JSONObject(getIntent().getStringExtra("Pogoda"));
-				Log.i("JSON w sportach", jObject.toString());
-
-				city = jObject.getString("city");
-				temp = jObject.getDouble("feelslike_c"); // temp odczuwalna
-				pogoda = jObject.getString("weather");
-				// miesiac = jObject.getInt("month");
-				String m = jObject.getString("month");
-				miesiac = Integer.parseInt(m);
-
-				String godzinaString = "";
-				String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
-				int i = 0;
-				while (aktualnaGodzina.charAt(i) != ',') {
-					i++;
-				}
-
-				godzinaString = godzinaString + aktualnaGodzina.charAt(i + 2)
-						+ aktualnaGodzina.charAt(i + 3);
-				godzina = Integer.parseInt(godzinaString);
-
-				dzienTygodnia = jObject.getString("weekDay");
-				poraRoku = poraRoku();
-				poraDnia = poraDnia();
-
-				wyborSportow();
-
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Log.i("B³¹d","Pusty parametr");
 
 		}
 
@@ -198,9 +157,7 @@ public class Sporty extends ListActivity {
 			deszczowaPogoda(poraDnia);
 		else if (pogoda2.equals("niewielkie zachmurzenie"))
 			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("deszcz"))
-			deszczowaPogoda(poraDnia);
-		else if (pogoda2.equals("lekki deszcz"))
+		else if ((pogoda2.equals("deszcz"))||(pogoda2.equals("lekki deszcz"))||(pogoda2.equals("gêsty deszcz")))
 			deszczowaPogoda(poraDnia);
 		else if (pogoda2.equals("pochmurno"))
 			ladnaPogoda(poraDnia);
@@ -222,6 +179,8 @@ public class Sporty extends ListActivity {
 			ladnaPogoda(poraDnia);
 		else if (pogoda2.equals("gêsta mg³a"))
 			innaPogoda(poraDnia);
+		else if ((pogoda2.equals("lekki œnie¿ek"))||(pogoda2.equals("œnie¿ek")))
+			ladnaPogoda(poraDnia);
 		else
 			// listArray.add("Nieznany rodzaj pogody");
 			innaPogoda(poraDnia);

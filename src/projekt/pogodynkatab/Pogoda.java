@@ -66,8 +66,20 @@ public class Pogoda extends Activity {
 					Log.i("CIŒNIENIE",
 							ForecastActivity._mainActivity.cndtns.pressureTrend);
 				}
+				
+				String warunkiPogodowe;
+				if(ForecastActivity._mainActivity.cndtns.weather.equals("")){
+					warunkiPogodowe = ForecastActivity._mainActivity.hourlyForecast.get(0).condition;								
+	            	
+	            	}
+				else
+					warunkiPogodowe = ForecastActivity._mainActivity.cndtns.weather;
+				
+				String warunkiPogodowe2;
+				char first = Character.toUpperCase(warunkiPogodowe.charAt(0));
+            	warunkiPogodowe2 = first + warunkiPogodowe.substring(1);
 
-				String pogoda = ForecastActivity._mainActivity.cndtns.weather
+				String pogoda = warunkiPogodowe2
 						+ "\nTemp: "
 						+ ForecastActivity._mainActivity.cndtns.tempC
 						+ "C 	Odczuwalna:"
@@ -92,7 +104,7 @@ public class Pogoda extends Activity {
 				pogoda1.setText(pogoda);
 				
 				String folder;
-				if((Integer.parseInt(dzien.data.hour)<6)||(Integer.parseInt(dzien.data.hour)>21))
+				if((Integer.parseInt(dzien.data.hour)>=6)&&(Integer.parseInt(dzien.data.hour)<=21))
 					folder="night/";
 				else
 					folder="day/";

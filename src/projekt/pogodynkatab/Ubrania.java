@@ -32,7 +32,8 @@ public class Ubrania extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ubrania);
 		if (ForecastActivity._mainActivity != null) {
-			//List<ForecastDay> simple10days = ForecastActivity._mainActivity.simple10day;
+			// List<ForecastDay> simple10days =
+			// ForecastActivity._mainActivity.simple10day;
 
 			if (ForecastActivity._mainActivity.display_location != null) {
 				Log.i("COSTAM", "Nie jest nullem");
@@ -50,61 +51,41 @@ public class Ubrania extends Activity {
 							.getString("weather");
 					wind = ForecastActivity._mainActivity.current_observation
 							.getString("wind_kph");
-					
-					
-					//sprawdza, czy w ci¹gu 3h nie bêdzie deszczu
-					bedzieDeszcz=false;				
-					String pogodaZaGodzine="";		
-					int j;
-						
-					for(int i=0;i<2;i++){	
-						
-						pogodaZaGodzine = ForecastActivity._mainActivity.txt10day.get(i).fcttext.toString();
-						String zapowiedz="";
-						j=0;
-						while(pogodaZaGodzine.charAt(j)!='.'){
-							zapowiedz=zapowiedz+pogodaZaGodzine.charAt(j);
-							j++;					
+
+					// sprawdza, czy w ci¹gu 3h nie bêdzie deszczu
+					bedzieDeszcz = false;
+
+					for (int i = 0; i < 2; i++) {
+
+						String zapowiedz = ForecastActivity._mainActivity.hourlyForecast
+								.get(i).condition;
+
+						if ((zapowiedz.equals("mo¿liwy deszcz"))
+								|| (zapowiedz.equals("mo¿liwe burze"))) {
+							bedzieDeszcz = true;
 						}
-						if((zapowiedz.equals("Mo¿liwy deszcz"))||(zapowiedz.equals("Mo¿liwe burze"))){
-							bedzieDeszcz=true;							
-						}						
-					
+
 					}
-					if((pogoda.equals("deszcz"))||(pogoda.equals("lekki deszcz"))||pogoda.equals(("lekkie przelotne deszcze"))||
-							(pogoda.equals("m¿awka"))||(bedzieDeszcz))
+					if ((pogoda.equals("deszcz"))
+							|| (pogoda.equals("lekki deszcz"))
+							|| pogoda.equals(("lekkie przelotne deszcze"))
+							|| (pogoda.equals("m¿awka")) || (bedzieDeszcz))
 						ubierzDeszczowo();
 					else
 						ubierz();
-					
+
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			} else {
-				Log.i("COSTAM", "Jest nullem :C");											
+				Log.i("COSTAM", "Jest nullem :C");
 			}
-			
-		}
-			else{
-				try {
-					jObject = new JSONObject(getIntent().getStringExtra("Pogoda"));
-					temp = jObject.getDouble("feelslike_c");
-					pogoda = jObject.getString("weather");
-					
-					Log.i("Pogoda",pogoda.toString());
-					if((pogoda.equals("deszcz"))||pogoda.equals("lekki deszcz")||pogoda.equals("lekkie przelotne deszcze")||
-							pogoda.equals("m¿awka"))
-						ubierzDeszczowo();
-					else
-						ubierz();		
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				
-			}
-				
+
+		} else {
+			Log.i("B³¹d", "Pusty parametr");
+
 		}
 	}
 
@@ -122,12 +103,23 @@ public class Ubrania extends Activity {
 		 * new LayerDrawable(layers); obrazek.setImageDrawable(layerDrawable);
 		 */
 
-		if (temp < 5) {
+		if (temp < -5) {
+			Drawable[] layers = new Drawable[4];
+			layers[0] = r.getDrawable(R.drawable.kobieta);
+			layers[1] = r.getDrawable(R.drawable.buty_k);
+			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[3] = r.getDrawable(R.drawable.kurtka_zimowa_czapka_k);
+			LayerDrawable layerDrawable = new LayerDrawable(layers);
+			obrazek.setImageDrawable(layerDrawable);
+
+		}
+
+		else if (temp < 5) {
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
 			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
-			layers[3] = r.getDrawable(R.drawable.kurtka_k);
+			layers[3] = r.getDrawable(R.drawable.kurtka_rekawiczki_k);
 			layers[4] = r.getDrawable(R.drawable.czapka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
@@ -181,92 +173,88 @@ public class Ubrania extends Activity {
 		}
 
 	}
-	
-	
-public void ubierzDeszczowo(){
-		
-		
-		obrazek = (ImageView)findViewById(R.id.obrazek);
+
+	public void ubierzDeszczowo() {
+
+		obrazek = (ImageView) findViewById(R.id.obrazek);
 		Resources r = getResources();
-		
-		if(temp<5){	
+
+		if (temp < 5) {
 
 			Drawable[] layers = new Drawable[6];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
-			layers[2] = r.getDrawable(R.drawable.spodniedl_k);		
-			layers[3] = r.getDrawable(R.drawable.kurtka_k);	
-			layers[4] = r.getDrawable(R.drawable.czapka_k);	
-			layers[5] = r.getDrawable(R.drawable.parasolka_k);	
+			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[3] = r.getDrawable(R.drawable.kurtka_k);
+			layers[4] = r.getDrawable(R.drawable.czapka_k);
+			layers[5] = r.getDrawable(R.drawable.parasolka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
-			
+
 		}
-		
-		else if(temp<10){				
+
+		else if (temp < 10) {
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
-			layers[2] = r.getDrawable(R.drawable.spodniedl_k);		
-			layers[3] = r.getDrawable(R.drawable.kurtka_k);	
-			layers[4] = r.getDrawable(R.drawable.parasolka_k);	
+			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[3] = r.getDrawable(R.drawable.kurtka_k);
+			layers[4] = r.getDrawable(R.drawable.parasolka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
-			
+
 		}
-		
-		else if(temp<18){
-			//10-17
+
+		else if (temp < 18) {
+			// 10-17
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
-			layers[2] = r.getDrawable(R.drawable.spodniedl_k);		
-			layers[3] = r.getDrawable(R.drawable.kurtka_k);	
-			layers[4] = r.getDrawable(R.drawable.parasolka_k);	
+			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[3] = r.getDrawable(R.drawable.kurtka_k);
+			layers[4] = r.getDrawable(R.drawable.parasolka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
-			
+
 		}
-		
-		else if(temp<23){
-			//18-22
+
+		else if (temp < 23) {
+			// 18-22
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
-			layers[2] = r.getDrawable(R.drawable.spodniedl_k);		
-			layers[3] = r.getDrawable(R.drawable.dlrekaw_k);	
-			layers[4] = r.getDrawable(R.drawable.parasolka_k);	
+			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[3] = r.getDrawable(R.drawable.dlrekaw_k);
+			layers[4] = r.getDrawable(R.drawable.parasolka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
-			
+
 		}
-		
-		else if(temp<28){
-			//23-27
+
+		else if (temp < 28) {
+			// 23-27
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.sandalki_k);
-			layers[2] = r.getDrawable(R.drawable.spodniedl_k);		
-			layers[3] = r.getDrawable(R.drawable.tshirt_k);	
-			layers[4] = r.getDrawable(R.drawable.parasolka_k);	
-			LayerDrawable layerDrawable = new LayerDrawable(layers); 
+			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[3] = r.getDrawable(R.drawable.tshirt_k);
+			layers[4] = r.getDrawable(R.drawable.parasolka_k);
+			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
 		}
-		
-		else{
-			//28 i w górê
+
+		else {
+			// 28 i w górê
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.sandalki_k);
-			layers[2] = r.getDrawable(R.drawable.spodniekr_k);		
+			layers[2] = r.getDrawable(R.drawable.spodniekr_k);
 			layers[3] = r.getDrawable(R.drawable.podkoszulek_k);
-			layers[4] = r.getDrawable(R.drawable.parasolka_k);	
+			layers[4] = r.getDrawable(R.drawable.parasolka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
 		}
-		
-		
+
 	}
 
 }
-

@@ -84,7 +84,7 @@ public class ListParser {
                 //	String data = String.valueOf(c.DAY_OF_MONTH)+"."+String.valueOf(c.MONTH)+"."+String.valueOf(c.YEAR);
                 	
                 //	Time now = new Time();
-                //	now.setToNow();
+                //	now.setToNow(); 
                 //	String data = String.valueOf(now.MONTH_DAY)+"."+String.valueOf(now.MONTH)+"."+String.valueOf(now.YEAR);
                 	
                 	final String tekst = pog.title+":\n" + metric;

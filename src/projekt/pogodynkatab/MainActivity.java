@@ -39,11 +39,6 @@ public class MainActivity extends Activity implements LocationListener{
 		startActivity(intent);
 	}
 
-	public void test(View view) {
-		Intent intent = new Intent(this, Test.class);
-		startActivity(intent);
-	}
-
 	public void GPS(View view) {
 		uzyjGPS();
 	}

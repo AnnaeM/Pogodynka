@@ -68,17 +68,7 @@ public class Wypoczynek extends ListActivity {
 					Log.i("Pogoda", pogoda.toString());
 					if (pogoda.equals("")) {
 						// bo w Pu³awach nie ma pogody :c
-						String pogodaAwaryjna;
-						pogodaAwaryjna = ForecastActivity._mainActivity.txt10day
-								.get(0).fcttext.toString();
-						Log.i("Pusta pogoda!", pogodaAwaryjna);
-
-						int i = 0;
-						while (pogodaAwaryjna.charAt(i) != '.') {
-							pogoda = pogoda + pogodaAwaryjna.charAt(i);
-							i++;
-
-						}
+						pogoda = ForecastActivity._mainActivity.hourlyForecast.get(0).condition;					
 						Log.i("Pogoda awaryjna", pogoda);
 					}
 					wind = ForecastActivity._mainActivity.current_observation
@@ -112,31 +102,9 @@ public class Wypoczynek extends ListActivity {
 			}
 		}
 
-		else {
-			try {
-				jObject = new JSONObject(getIntent().getStringExtra("Pogoda"));
-				Log.i("JSON w sportach", jObject.toString());
-
-				city = jObject.getString("city");
-				temp = jObject.getDouble("feelslike_c"); // temp odczuwalna
-				pogoda = jObject.getString("weather");
-				// miesiac = jObject.getInt("month");
-				String m = jObject.getString("month");
-				miesiac = Integer.parseInt(m);
-
-				godzina = jObject.getInt("hour");
-				dzienTygodnia = jObject.getString("weekDay");
-
-				poraRoku();
-
-				wyborWypoczynku();
-
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		else {		
+			Log.i("B³¹d","Pusty parametr");
 			}
-
-		}
 
 		if (lista.isEmpty()) {
 			lista.add("Zostañ w domu");
@@ -309,6 +277,7 @@ public class Wypoczynek extends ListActivity {
 		lista.add("Spacer z psem");
 		lista.add("Fotografowanie");
 		lista.add("Rysowanie krajobrazu");
+		//lista.add("Gra na gitarze");
 
 	}
 
@@ -335,12 +304,14 @@ public class Wypoczynek extends ListActivity {
 		if ((poraDnia == 'w') || (poraDnia == 'n') || (poraDnia == 'g')) {
 			lista.add("Wyjœcie na imprezê");
 			lista.add("Randka w ciemno");
+			lista.add("Pub");
+			lista.add("Koncert");
 		}
 
 	}
 
 	public void okazjonalne() { // dodaæ warunki
-		lista.add("Koncert");
+		//lista.add("Koncert");
 		//lista.add("Cyrk");
 		// lista.add("IdŸ na wydarzenie w mieœcie");
 	}
@@ -364,22 +335,22 @@ public class Wypoczynek extends ListActivity {
 				|| (pogoda2.equals("niewielkie zachmurzenie"))
 				|| pogoda2.equals("ob³oki zanikaj¹ce")) {
 			if ((godzina >= wschodSlonca - 1) && (godzina <= wschodSlonca + 1)) {
-				lista.add("Ogl¹danie wschodu s³oñca");
+				lista.add("Podziwiaj wschód s³oñca");
 			}
 
 			if ((godzina >= zachodSlonca - 1) && (godzina <= zachodSlonca + 1)) {
-				lista.add("Ogl¹danie zachodu s³oñca");
+				lista.add("Podziwiaj zachód s³oñca");
 			}
 
 			if ((godzina > zachodSlonca + 1) || (godzina < wschodSlonca - 1)) {
-				lista.add("Obserwowanie gwiazd");
+				lista.add("Podziwiaj gwiazdy");
 			}
 
 		}
 
 		if (!pogoda2.equals("pogodnie")) {
 			if ((godzina <= zachodSlonca) && (godzina >= wschodSlonca))
-				lista.add("Obserwowanie chmur");
+				lista.add("Podziwiaj chmury/niebo");
 		}
 		// lista.add("Wyjœcie na pla¿ê");
 		// lista.add("Przeja¿d¿ka promem");
@@ -418,10 +389,12 @@ public class Wypoczynek extends ListActivity {
 			f = "Centrum+handlowe";
 		} else if (wybrany.equals("Zoo")) {
 			f = "Ogród+zoologogiczny";
-		} else if ((wybrany.equals("Ogl¹danie wschodu s³oñca"))
-				|| (wybrany.equals("Ogl¹danie zachodu s³oñca"))
-				|| (wybrany.equals("Obserwowanie gwiazd"))
-				|| (wybrany.equals("Obserwowanie chmur"))
+		} else if ((wybrany.equals("Zajêcia plastyczne"))||(wybrany.equals("Zajêcia muzyczne"))) {
+			f = "Dom+kultury";
+		} else if ((wybrany.equals("Podziwiaj wschód s³oñca"))
+				|| (wybrany.equals("Podziwiaj zachód s³oñca"))
+				|| (wybrany.equals("Podziwiaj gwiazdy"))
+				|| (wybrany.equals("Podziwiaj chmury/niebo"))
 				|| (wybrany.equals("Puszczanie latawca"))
 				|| (wybrany.equals("Wyjazd na dzia³kê/wieœ"))
 				|| (wybrany.equals("Opalanie"))) {
