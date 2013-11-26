@@ -19,7 +19,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="projekt.pogodynkatab.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,35 +29,43 @@
         </activity>
         <activity
             android:name="projekt.pogodynkatab.ForecastActivity"
-            android:label="@string/title_activity_forecast" >
+            android:label="@string/title_activity_forecast"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="projekt.pogodynkatab.Pogoda"
-            android:label="@string/title_activity_pogoda" >
+            android:label="@string/title_activity_pogoda" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="projekt.pogodynkatab.Pogoda10dni"
-            android:label="@string/title_activity_pogoda10dni" >
+            android:label="@string/title_activity_pogoda10dni" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="projekt.pogodynkatab.PogodaGodz"
-            android:label="@string/title_activity_pogoda_godz" >
+            android:label="@string/title_activity_pogoda_godz" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="projekt.pogodynkatab.Sporty"
-            android:label="@string/title_activity_sporty" >
+            android:label="@string/title_activity_sporty" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="projekt.pogodynkatab.Ubrania"
-            android:label="@string/title_activity_ubrania" >
+            android:label="@string/title_activity_ubrania"
+			android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="projekt.pogodynkatab.Test"
-            android:label="@string/title_activity_test" >
+            android:label="@string/title_activity_test" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="projekt.pogodynkatab.Wypoczynek"
-            android:label="@string/title_activity_wypoczynek" >
+            android:label="@string/title_activity_wypoczynek" 
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

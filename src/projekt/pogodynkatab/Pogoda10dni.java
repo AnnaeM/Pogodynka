@@ -54,6 +54,6 @@ public class Pogoda10dni extends Activity {
     {
         return ForecastActivity._mainActivity.txt10day;
     }
-
+  
 
 }

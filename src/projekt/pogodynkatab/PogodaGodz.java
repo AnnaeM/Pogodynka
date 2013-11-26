@@ -56,5 +56,10 @@ public class PogodaGodz extends Activity {
     {
         return ForecastActivity._mainActivity.hourlyForecast;
     }
+    
+    public static Astronomy getAstronomy()
+    {
+        return ForecastActivity._mainActivity.astronomia;
+    }
 
 }

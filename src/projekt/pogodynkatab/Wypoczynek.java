@@ -358,7 +358,7 @@ public class Wypoczynek extends ListActivity {
 
 		if (poraRoku != 'z') {
 
-			if (Double.valueOf(wind) > 10)
+			if ((Double.valueOf(wind) > 25)&&(godzina>wschodSlonca)&&(godzina<zachodSlonca))
 				lista.add("Puszczanie latawca");
 
 			if ((godzina < zachodSlonca) && (godzina > wschodSlonca)) {

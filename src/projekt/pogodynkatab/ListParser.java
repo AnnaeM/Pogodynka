@@ -26,7 +26,7 @@ public class ListParser {
  
 
     public void parse() {
-    	
+
     	if(rodzajListy.equals("godzinowa")){
        
     		godzinowa = PogodaGodz.getList();        
@@ -52,7 +52,8 @@ public class ListParser {
             	final String nazwaIkony = pog.icon;
             	
             	String folder;
-            	if((pog.czas.hour<=6)||(pog.czas.hour>=21))
+            	Astronomy astronomia = PogodaGodz.getAstronomy();
+            	if((pog.czas.hour<=astronomia.sunrise.hour)||(pog.czas.hour>=astronomia.sunset.hour))
             			folder="night/";
             	else  
             		folder="day/";
@@ -78,15 +79,11 @@ public class ListParser {
                 	
 
                 	metric = metric.replace("Light Wind","Lekki wiatr");
-                	
-                //	Calendar c = Calendar.getInstance(); 
-                	//int day = c.DATE;
-                //	String data = String.valueOf(c.DAY_OF_MONTH)+"."+String.valueOf(c.MONTH)+"."+String.valueOf(c.YEAR);
-                	
-                //	Time now = new Time();
-                //	now.setToNow(); 
-                //	String data = String.valueOf(now.MONTH_DAY)+"."+String.valueOf(now.MONTH)+"."+String.valueOf(now.YEAR);
-                	
+               
+                	//Time now = new Time();
+                	//now.setToNow(); 
+                	//String data = String.valueOf(now.MONTH_DAY)+"."+String.valueOf(now.MONTH)+"."+String.valueOf(now.YEAR);              	
+                			
                 	final String tekst = pog.title+":\n" + metric;
                 	final String nazwaIkony = pog.icon;
                 	

@@ -1,13 +1,12 @@
 package projekt.pogodynkatab;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -103,11 +102,29 @@ public class Pogoda extends Activity {
 						+ ForecastActivity._mainActivity.cndtns.relativeHumidity;
 				pogoda1.setText(pogoda);
 				
+				/*int godzina;
+				String godzinaString = "";
+				String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
+				int i = 0;
+				while (aktualnaGodzina.charAt(i) != ',') {
+					i++;
+				}
+
+				godzinaString = godzinaString
+						+ aktualnaGodzina.charAt(i + 2)
+						+ aktualnaGodzina.charAt(i + 3);
+				godzina = Integer.parseInt(godzinaString);
+				*/
+				
+				Time now = new Time();
+				now.setToNow();
+				Log.i("Teraz",now.toString());
+				
 				String folder;
-				if((Integer.parseInt(dzien.data.hour)>=6)&&(Integer.parseInt(dzien.data.hour)<=21))
-					folder="night/";
-				else
+				if((now.hour>ForecastActivity._mainActivity.astronomia.sunrise.hour)&&(now.hour<ForecastActivity._mainActivity.astronomia.sunrise.hour))
 					folder="day/";
+				else
+					folder="night/";
 				
 				 String imgFilePath = ASSETS_DIR +folder+ ForecastActivity._mainActivity.cndtns.icon+".png"; 
 			        try {
