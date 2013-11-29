@@ -144,47 +144,42 @@ public class Sporty extends ListActivity {
 
 	public void wyborSportow() {
 
-		char poraDnia = poraDnia();
-		// pogoda = pogoda.toLowerCase();
-		String pogoda2 = pogoda.toLowerCase();
-		if (pogoda2.equals("pogodnie")) {
+		
+		String pogoda2 = pogoda.toLowerCase();		
+		if ((pogoda2.equals("pogodnie"))||(pogoda2.equals("przewaga chmur"))
+				||(pogoda2.equals("ob³oki zanikaj¹ce"))||(pogoda2.equals("niewielkie zachmurzenie"))
+				||(pogoda2.equals("pochmurno")))
 			ladnaPogoda(poraDnia);
-		} else if (pogoda2.equals("przewaga chmur"))
-			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("ob³oki zanikaj¹ce"))
-			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("œnieg"))
+		
+		else if ((pogoda2.contains("deszcz"))||(pogoda2.contains("przelotne deszcze")))
 			deszczowaPogoda(poraDnia);
-		else if (pogoda2.equals("niewielkie zachmurzenie"))
-			ladnaPogoda(poraDnia);
-		else if ((pogoda2.equals("deszcz"))||(pogoda2.equals("lekki deszcz"))||(pogoda2.equals("gêsty deszcz")))
+		
+		else if (pogoda2.equals("lekka m¿awka"))
+			ladnaPogoda(poraDnia);		
+		else if (pogoda2.contains("m¿awka"))
 			deszczowaPogoda(poraDnia);
-		else if (pogoda2.equals("pochmurno"))
-			ladnaPogoda(poraDnia);
+		
 		else if (pogoda2.equals("p³atki mg³y"))
 			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("lekkie przelotne deszcze"))
-			deszczowaPogoda(poraDnia);
-		else if (pogoda2.equals("lekka m¿awka"))
-			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("zamglenia"))
-			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("m¿awka"))
-			deszczowaPogoda(poraDnia);
-		else if (pogoda2.equals("mg³a"))
-			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("lekka mg³a"))
-			ladnaPogoda(poraDnia);
-		else if (pogoda2.equals("czêœciowe zamglenia"))
+		else if (pogoda2.contains("zamglenia"))
 			ladnaPogoda(poraDnia);
 		else if (pogoda2.equals("gêsta mg³a"))
 			innaPogoda(poraDnia);
-		else if ((pogoda2.equals("lekki œnie¿ek"))||(pogoda2.equals("œnie¿ek")))
+		else if (pogoda2.contains("mg³a"))
+			ladnaPogoda(poraDnia);	
+		
+		else if (pogoda2.equals("gêsty œnieg"))
+			deszczowaPogoda(poraDnia);
+		else if (pogoda2.contains("œnieg"))
 			ladnaPogoda(poraDnia);
+		else if (pogoda2.contains("œnie¿ek"))
+			ladnaPogoda(poraDnia);
+		
 		else
 			// listArray.add("Nieznany rodzaj pogody");
 			innaPogoda(poraDnia);
 
+		//nie ma burzy - i tak powinno byæ "zostañ w domu
 	}
 
 	public char poraDnia() {

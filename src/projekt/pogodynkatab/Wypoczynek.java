@@ -203,43 +203,40 @@ public class Wypoczynek extends ListActivity {
 
 		poraDnia();
 		String pogoda2 = pogoda.toLowerCase();
-		if (pogoda2.equals("pogodnie")) {
+		if ((pogoda2.equals("pogodnie"))||(pogoda2.equals("przewaga chmur"))
+				||(pogoda2.equals("ob³oki zanikaj¹ce"))||(pogoda2.equals("niewielkie zachmurzenie"))
+				||(pogoda2.equals("pochmurno")))
 			ladnaPogoda();
-		} else if (pogoda2.equals("przewaga chmur"))
-			ladnaPogoda();
-		else if (pogoda2.equals("ob³oki zanikaj¹ce"))
-			ladnaPogoda();
-		else if (pogoda2.equals("œnieg"))
+		
+		else if ((pogoda2.contains("deszcz"))||(pogoda2.contains("przelotne deszcze")))
 			deszczowaPogoda();
-		else if (pogoda2.equals("niewielkie zachmurzenie"))
-			ladnaPogoda();
-		else if (pogoda2.equals("deszcz"))
+		
+		else if (pogoda2.equals("lekka m¿awka"))
+			ladnaPogoda();		
+		else if (pogoda2.contains("m¿awka"))
 			deszczowaPogoda();
-		else if (pogoda2.equals("lekki deszcz"))
-			deszczowaPogoda();
-		else if (pogoda2.equals("pochmurno"))
-			ladnaPogoda();
+		
 		else if (pogoda2.equals("p³atki mg³y"))
 			ladnaPogoda();
-		else if (pogoda2.equals("lekkie przelotne deszcze"))
-			deszczowaPogoda();
-		else if (pogoda2.equals("lekka m¿awka"))
-			ladnaPogoda();
-		else if (pogoda2.equals("zamglenia"))
-			ladnaPogoda();
-		else if (pogoda.equals("m¿awka"))
-			deszczowaPogoda();
-		else if (pogoda.equals("mg³a"))
-			ladnaPogoda();
-		else if (pogoda.equals("lekka mg³a"))
-			ladnaPogoda();
-		else if (pogoda.equals("czêœciowe zamglenia"))
+		else if (pogoda2.contains("zamglenia"))
 			ladnaPogoda();
 		else if (pogoda2.equals("gêsta mg³a"))
-			innaPogoda(poraDnia);
+			innaPogoda();
+		else if (pogoda2.contains("mg³a"))
+			ladnaPogoda();	
+		
+		else if (pogoda2.equals("gêsty œnieg"))
+			deszczowaPogoda();
+		else if (pogoda2.contains("œnieg"))
+			ladnaPogoda();
+		else if (pogoda2.contains("œnie¿ek"))
+			ladnaPogoda();
+		
 		else
-			//lista.add("Nieznany rodzaj pogody");
-			innaPogoda(poraDnia);
+			// listArray.add("Nieznany rodzaj pogody");
+			innaPogoda();
+
+		//nie ma burzy - i tak powinno byæ "zostañ w domu
 		
 		zalezne();
 	}
@@ -260,7 +257,7 @@ public class Wypoczynek extends ListActivity {
 
 	}
 
-	public void innaPogoda(char poraDnia) {
+	public void innaPogoda() {
 		// gêsta mgla itd
 		if ((temp > -30) && (temp < 35)) {
 			lista.add("Spacer");

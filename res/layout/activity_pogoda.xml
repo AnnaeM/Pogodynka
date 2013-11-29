@@ -24,9 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        
-
-        <TextView
+       <TextView
             android:id="@+id/data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,17 +38,13 @@
             android:layout_height="wrap_content"
             android:text="" />
 
-        <TextView
-            android:id="@+id/pogoda"
+        <ImageView
+            android:id="@+id/iconIV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:layout_gravity="right"
+            android:src="@drawable/ic_launcher" />
 
-        <TextView
-            android:id="@+id/astronomy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
     </LinearLayout>
 
 </ScrollView>

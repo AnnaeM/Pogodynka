@@ -51,9 +51,9 @@ public class ForecastActivity extends TabActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
-		pobrano=false;
-		
+
+		pobrano = false;
+
 		super.onCreate(savedInstanceState);
 		_mainActivity = this;
 		setContentView(R.layout.activity_forecast);
@@ -63,68 +63,70 @@ public class ForecastActivity extends TabActivity {
 			nazwaMiasta = extras.getString("Lokacja");
 			// TextView tv = (TextView) this.findViewById(R.id.lokacja2TB);
 			// tv.setText(nazwaMiasta);
-				pobierzPrognoze(nazwaMiasta);
-				Log.i("TUTAJ!", "Tutaj");						
-			
+			pobierzPrognoze(nazwaMiasta);
+			Log.i("TUTAJ!", "Tutaj");
+
 		}
 
 		if (pobrano) {
-		// ZAK£ADKI
-		TabHost tabHost = getTabHost(); // tab dla phoTOS
-		TabSpec pogospec = tabHost.newTabSpec("Pogoda"); // tytu³ i zdjecie
-		pogospec.setIndicator("Pogoda",
-				getResources().getDrawable(R.drawable.icon_pogoda_tab));
-		Intent pogodaIntent = new Intent(this, Pogoda.class);
-		pogospec.setContent(pogodaIntent);
+			// ZAK£ADKI
+			TabHost tabHost = getTabHost(); // tab dla phoTOS
+			TabSpec pogospec = tabHost.newTabSpec("Pogoda"); // tytu³ i zdjecie
+			pogospec.setIndicator("Pogoda",
+					getResources().getDrawable(R.drawable.icon_pogoda_tab));
+			Intent pogodaIntent = new Intent(this, Pogoda.class);
+			pogospec.setContent(pogodaIntent);
 
-		// Tab for Songs
-		TabSpec ubraniaSpec = tabHost.newTabSpec("Ubrania");
-		ubraniaSpec.setIndicator("Ubrania",
-				getResources().getDrawable(R.drawable.icon_ubrania_tab));
-		Intent ubraniaIntent = new Intent(this, Ubrania.class);
-		ubraniaSpec.setContent(ubraniaIntent);
+			// Tab for Songs
+			TabSpec ubraniaSpec = tabHost.newTabSpec("Ubrania");
+			ubraniaSpec.setIndicator("Ubrania",
+					getResources().getDrawable(R.drawable.icon_ubrania_tab));
+			Intent ubraniaIntent = new Intent(this, Ubrania.class);
+			ubraniaSpec.setContent(ubraniaIntent);
 
-		// Tab for Videos
-		TabSpec sportSpec = tabHost.newTabSpec("Sporty");
-		sportSpec.setIndicator("Sporty",
-				getResources().getDrawable(R.drawable.icon_sport_tab));
-		Intent sportIntent = new Intent(this, Sporty.class);
-		sportSpec.setContent(sportIntent);
-		
-		//Tab dla wypoczynku
-		TabSpec wypSpec = tabHost.newTabSpec("Wypoczynek");
-		wypSpec.setIndicator("Wypoczynek",getResources().getDrawable(R.drawable.icon_wypoczynek_tab));
-		Intent wypIntent = new Intent(this,Wypoczynek.class);
-		wypSpec.setContent(wypIntent);
+			// Tab for Videos
+			TabSpec sportSpec = tabHost.newTabSpec("Sporty");
+			sportSpec.setIndicator("Sporty",
+					getResources().getDrawable(R.drawable.icon_sport_tab));
+			Intent sportIntent = new Intent(this, Sporty.class);
+			sportSpec.setContent(sportIntent);
 
-		// Tab dla godzinowej?
-		TabSpec godzSpec = tabHost.newTabSpec("Godzinowa");
-		godzSpec.setIndicator("Godzinowa",
-				getResources().getDrawable(R.drawable.icon_pog_godz_tab));
-		Intent godzIntent = new Intent(this, PogodaGodz.class);
-		godzSpec.setContent(godzIntent);
-		
-		// Tab dla nastêpnych dni
-				TabSpec dni10Spec = tabHost.newTabSpec("10 dni");
-				dni10Spec.setIndicator("10 dni",
-						getResources().getDrawable(R.drawable.icon_pog_10dni_tab));
-				Intent dni10Intent = new Intent(this, Pogoda10dni.class);
-				dni10Spec.setContent(dni10Intent);
+			// Tab dla wypoczynku
+			TabSpec wypSpec = tabHost.newTabSpec("Wypoczynek");
+			wypSpec.setIndicator("Wypoczynek",
+					getResources().getDrawable(R.drawable.icon_wypoczynek_tab));
+			Intent wypIntent = new Intent(this, Wypoczynek.class);
+			wypSpec.setContent(wypIntent);
 
-		// Adding all TabSpec to TabHost
-		tabHost.addTab(pogospec); // pogoda na teraz
-		tabHost.addTab(godzSpec);	//godzinowa
-		tabHost.addTab(dni10Spec);	//10dniowa
-		tabHost.addTab(sportSpec); // sporty
-		tabHost.addTab(wypSpec);	//wypoczynek
-		tabHost.addTab(ubraniaSpec); // ubrania
+			// Tab dla godzinowej?
+			TabSpec godzSpec = tabHost.newTabSpec("Godzinowa");
+			godzSpec.setIndicator("Godzinowa",
+					getResources().getDrawable(R.drawable.icon_pog_godz_tab));
+			Intent godzIntent = new Intent(this, PogodaGodz.class);
+			godzSpec.setContent(godzIntent);
+
+			// Tab dla nastêpnych dni
+			TabSpec dni10Spec = tabHost.newTabSpec("10 dni");
+			dni10Spec.setIndicator("10 dni",
+					getResources().getDrawable(R.drawable.icon_pog_10dni_tab));
+			Intent dni10Intent = new Intent(this, Pogoda10dni.class);
+			dni10Spec.setContent(dni10Intent);
+	
+		    
+			// Adding all TabSpec to TabHost
+			tabHost.addTab(pogospec); // pogoda na teraz
+			tabHost.addTab(godzSpec); // godzinowa
+			tabHost.addTab(dni10Spec); // 10dniowa
+			tabHost.addTab(sportSpec); // sporty
+			tabHost.addTab(wypSpec); // wypoczynek
+			tabHost.addTab(ubraniaSpec); // ubrania
+			
 		}
 	}
 
 	public void pobierzPrognoze(String city) {
 		// TODO Auto-generated method stub
-		
-		
+
 		final String GET_WEATHER_URL;
 		if (Character.isDigit(city.charAt(0))) {
 			GET_WEATHER_URL = WEATHER_URL + city + ".json";
@@ -293,7 +295,7 @@ public class ForecastActivity extends TabActivity {
 					 * 
 					 * }
 					 */
-					pobrano=true;
+					pobrano = true;
 				}
 				for (ForecastDay d : this.simpleForecast) {
 					Log.i("10DAYS!!! " + d.data.day, d.data.pretty + " "
@@ -328,7 +330,7 @@ public class ForecastActivity extends TabActivity {
 									public void onClick(DialogInterface dialog,
 											int id) {
 										// TODO Auto-generated method stub
-										dialog.cancel();									
+										dialog.cancel();
 										finish();
 									}
 								});
@@ -352,7 +354,7 @@ public class ForecastActivity extends TabActivity {
 			 * b2.setVisibility(View.INVISIBLE);
 			 */
 			Log.i("ERROR", "nie uda³o siê po³¹czyæ z serwerem");
-			
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Przepraszamy!")
 					.setMessage("Nie uda³o siê po³¹czyæ z serwerem.")
@@ -363,7 +365,7 @@ public class ForecastActivity extends TabActivity {
 								public void onClick(DialogInterface dialog,
 										int id) {
 									// TODO Auto-generated method stub
-									dialog.cancel();									
+									dialog.cancel();
 									finish();
 								}
 							});
@@ -378,7 +380,7 @@ public class ForecastActivity extends TabActivity {
 		 * OBRABIANIE DANYCH HOURLY
 		 */
 		JSONArray hourly = jObject.getJSONArray("hourly_forecast");
-		
+
 		this.hourlyForecast = new ArrayList<HourlyForecast>();
 
 		for (int i = 0; i < hourly.length(); i++) {
@@ -399,7 +401,7 @@ public class ForecastActivity extends TabActivity {
 
 			Log.i("MONTH DAY", String.valueOf(pom.monthDay));
 			hf.czas = pom;
-			
+
 			hf.monAbbrev = pom3.getString("mon_abbrev");
 			hf.monthAbbrev = pom3.getString("month_name_abbrev");
 			hf.weekdayNameAbbrev = pom3.getString("weekday_name_abbrev");
@@ -440,8 +442,9 @@ public class ForecastActivity extends TabActivity {
 			Log.i(String.valueOf(i), hf.feelslike + " " + hf.czas.monthDay
 					+ " " + hf.czas.toString());
 
-			//JSONObject estimated = current_observation.getJSONObject("estimated");
-			aktualnaGodzina=current_observation.getString("observation_time");
+			// JSONObject estimated =
+			// current_observation.getJSONObject("estimated");
+			aktualnaGodzina = current_observation.getString("observation_time");
 		}
 	}
 
@@ -462,9 +465,8 @@ public class ForecastActivity extends TabActivity {
 		Log.i("disLoc", disLoc.getLatitude() + " " + disLoc.getLongitude()
 				+ " " + disLoc.getFull());
 
-		
-		//aktualnaGodzina=display_location.getString("observation_time");
-		
+		// aktualnaGodzina=display_location.getString("observation_time");
+
 		/*
 		 * TextView tv = (TextView) this.findViewById(R.id.lokacja2TB);
 		 * tv.setText(display_location.getString("city"));
@@ -709,7 +711,4 @@ public class ForecastActivity extends TabActivity {
 		 */
 	}
 
-	
-
 }
-

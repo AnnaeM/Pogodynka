@@ -58,7 +58,7 @@ public class Ubrania extends Activity {
 					for (int i = 0; i < 2; i++) {
 
 						String zapowiedz = ForecastActivity._mainActivity.hourlyForecast
-								.get(i).condition;
+								.get(i).condition.toLowerCase();
 
 						if ((zapowiedz.equals("mo퓄iwy deszcz"))
 								|| (zapowiedz.equals("mo퓄iwe burze"))) {
@@ -66,10 +66,11 @@ public class Ubrania extends Activity {
 						}
 
 					}
-					if ((pogoda.equals("deszcz"))
-							|| (pogoda.equals("lekki deszcz"))
-							|| pogoda.equals(("lekkie przelotne deszcze"))
-							|| (pogoda.equals("m풹wka")) || (bedzieDeszcz))
+					if ((pogoda.contains("deszcz"))							
+							|| pogoda.contains(("deszcze"))
+							|| (pogoda.contains("m풹wka")) 
+							|| (pogoda.contains("burza")) || (pogoda.contains("burze")) 
+							|| (bedzieDeszcz))
 						ubierzDeszczowo();
 					else
 						ubierz();

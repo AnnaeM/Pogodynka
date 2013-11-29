@@ -26,7 +26,7 @@ public class Pogoda extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pogoda);
 		if (ForecastActivity._mainActivity != null) {
-			ikonka = (ImageView) findViewById(R.id.ikonkaIV);
+			ikonka = (ImageView) findViewById(R.id.iconIV);
 		/*	URL url;
 			Bitmap bmp;
 			try {
@@ -83,7 +83,7 @@ public class Pogoda extends Activity {
 						+ ForecastActivity._mainActivity.cndtns.tempC
 						+ "C 	Odczuwalna:"
 						+ ForecastActivity._mainActivity.cndtns.feelslikeC
-						+ "C\nWiatr "
+						+ "C\nWiatr w porywach do "
 						+ ForecastActivity._mainActivity.cndtns.windDir
 						+ ", "
 						+ ForecastActivity._mainActivity.cndtns.windKph
@@ -121,7 +121,7 @@ public class Pogoda extends Activity {
 				Log.i("Teraz",now.toString());
 				
 				String folder;
-				if((now.hour>ForecastActivity._mainActivity.astronomia.sunrise.hour)&&(now.hour<ForecastActivity._mainActivity.astronomia.sunrise.hour))
+				if((now.hour>=ForecastActivity._mainActivity.astronomia.sunrise.hour)&&(now.hour<=ForecastActivity._mainActivity.astronomia.sunset.hour))
 					folder="day/";
 				else
 					folder="night/";
