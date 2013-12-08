@@ -13,5 +13,6 @@
     <string name="title_activity_ubrania">Ubrania</string>
     <string name="title_activity_test">Test</string>
     <string name="title_activity_wypoczynek">Wypoczynek</string>
+    <string name="title_activity_info">Info</string>
 
 </resources>

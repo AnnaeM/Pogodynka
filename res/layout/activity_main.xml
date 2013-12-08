@@ -26,7 +26,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="60dp"
-        android:inputType="textAutoCorrect" >
+        android:inputType="textAutoCorrect" 
+        android:imeOptions="actionGo">
 
     </EditText>
 
@@ -51,5 +52,14 @@
         android:layout_marginTop="14dp"
         android:onClick="GPS"
         android:text="Znajdź mnie przez GPS" />
+
+    <ImageView
+        android:id="@+id/mainLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="57dp"
+        android:src="@drawable/wundergroundlogo_black_horz" />
 
 </RelativeLayout>

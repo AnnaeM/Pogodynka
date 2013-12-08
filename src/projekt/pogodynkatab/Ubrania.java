@@ -7,11 +7,13 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 public class Ubrania extends Activity {
@@ -45,8 +47,7 @@ public class Ubrania extends Activity {
 					longitude = ForecastActivity._mainActivity.display_location
 							.getString("longitude");
 					temp = Double
-							.valueOf(ForecastActivity._mainActivity.current_observation
-									.getString("feelslike_c"));
+							.valueOf(ForecastActivity._mainActivity.cndtns.temperaturaOdczuwalna);
 					pogoda = ForecastActivity._mainActivity.current_observation
 							.getString("weather");
 					wind = ForecastActivity._mainActivity.current_observation
@@ -256,6 +257,25 @@ public class Ubrania extends Activity {
 			obrazek.setImageDrawable(layerDrawable);
 		}
 
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+	    switch(item.getItemId()){
+	    case R.id.about:
+	        Intent intent = new Intent(this, Info.class);
+	        startActivity(intent);
+	        return true;            
+	    }
+	    return false;
 	}
 
 }

@@ -42,4 +42,6 @@ public class Conditions {
 	public String UV;
 	public String icon;
 	public String iconURL;
+	
+	public double temperaturaOdczuwalna;
 }

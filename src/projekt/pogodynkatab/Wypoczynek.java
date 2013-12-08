@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,6 +47,7 @@ public class Wypoczynek extends ListActivity {
 
 		lista = new ArrayList<String>();
 
+		// jeœli pobrano pogodê
 		if (ForecastActivity._mainActivity != null) {
 			List<ForecastDay> simple10days = ForecastActivity._mainActivity.simple10day;
 			dzien = simple10days.get(0);
@@ -53,6 +55,7 @@ public class Wypoczynek extends ListActivity {
 			if (ForecastActivity._mainActivity.display_location != null) {
 				Log.i("WYPOCZYNEK", "Nie jest nullem");
 				try {
+					// pobranie potrzebnych danych
 					city = ForecastActivity._mainActivity.display_location
 							.getString("city");
 					latitude = ForecastActivity._mainActivity.display_location
@@ -60,15 +63,18 @@ public class Wypoczynek extends ListActivity {
 					longitude = ForecastActivity._mainActivity.display_location
 							.getString("longitude");
 					temp = Double
-							.valueOf(ForecastActivity._mainActivity.current_observation
-									.getString("feelslike_c"));
+							.valueOf(ForecastActivity._mainActivity.cndtns.temperaturaOdczuwalna);
 					pogoda = ForecastActivity._mainActivity.current_observation
 							.getString("weather");
 
-					Log.i("Pogoda", pogoda.toString());
+					// Log.i("Pogoda", pogoda.toString());
+
+					// gdy stacja meteorologiczna nie poda rodzaju aktualnej
+					// pogody zostanie ona pobrana z prognozy godzinowej
 					if (pogoda.equals("")) {
 						// bo w Pu³awach nie ma pogody :c
-						pogoda = ForecastActivity._mainActivity.hourlyForecast.get(0).condition;					
+						pogoda = ForecastActivity._mainActivity.hourlyForecast
+								.get(0).condition;
 						Log.i("Pogoda awaryjna", pogoda);
 					}
 					wind = ForecastActivity._mainActivity.current_observation
@@ -77,6 +83,7 @@ public class Wypoczynek extends ListActivity {
 					miesiac = Integer.parseInt(dzien.data.month);
 					dzienTygodnia = dzien.data.weekDay;
 
+					// wyszukanie godziny pobranej z serwera
 					String godzinaString = "";
 					String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
 					int i = 0;
@@ -98,68 +105,44 @@ public class Wypoczynek extends ListActivity {
 				}
 
 			} else {
-				Log.i("COSTAM", "Jest nullem :C");
+				Log.i("B³¹d", "Pusty parametr");
 			}
 		}
 
-		else {		
-			Log.i("B³¹d","Pusty parametr");
-			}
+		else {
+			Log.i("B³¹d", "Pusty parametr");
+		}
 
+		//gdy nie uda³o siê ¿adnego rodzaju wypoczynku
 		if (lista.isEmpty()) {
 			lista.add("Zostañ w domu");
 		}
 
+		//utworzenie listy
 		ArrayAdapter<String> array = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, lista);
 		setListAdapter(array);
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
+			//gdy zostanie wybrany element z listy
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				// Toast.makeText(getApplicationContext(),
-				// ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-
-				/*
-				 * String uri = "https://maps.google.pl/maps?q=" + city + "+" +
-				 * ((TextView) view).getText(); Log.i("URL", uri); Intent intent
-				 * = new
-				 * Intent(android.content.Intent.ACTION_VIEW,Uri.parse(uri));
-				 * intent.setClassName("com.google.android.apps.maps",
-				 * "com.google.android.maps.MapsActivity");
-				 * startActivity(intent);
-				 */
-				/*
-				 * String uri = "https://maps.google.pl/maps?q=" + city + "+" +
-				 * ((TextView) view).getText(); Log.i("URL", uri);
-				 * startActivity(new Intent(android.content.Intent.ACTION_VIEW,
-				 * Uri.parse(uri)));
-				 */
-
+				// wyszukiwanie w Google Maps
 				String wyszukiwanie = fraza((String) ((TextView) view)
 						.getText());
 
-				if (wyszukiwanie != "1") {
+				if (!wyszukiwanie.equals("1")) {
 					String uri = "https://maps.google.pl/maps?q=" + city + "+"
 							+ wyszukiwanie;
 					Log.i("URL", uri);
 					startActivity(new Intent(
 							android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
 				}
-
 			}
-
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.wypoczynek, menu);
-		return true;
 	}
 
 	public void poraDnia() {
@@ -202,20 +185,23 @@ public class Wypoczynek extends ListActivity {
 	public void wyborWypoczynku() {
 
 		poraDnia();
+		//ujednolicenie znaków w pogodzie
 		String pogoda2 = pogoda.toLowerCase();
-		if ((pogoda2.equals("pogodnie"))||(pogoda2.equals("przewaga chmur"))
-				||(pogoda2.equals("ob³oki zanikaj¹ce"))||(pogoda2.equals("niewielkie zachmurzenie"))
-				||(pogoda2.equals("pochmurno")))
+		if ((pogoda2.equals("pogodnie")) || (pogoda2.equals("przewaga chmur"))
+				|| (pogoda2.equals("ob³oki zanikaj¹ce"))
+				|| (pogoda2.equals("niewielkie zachmurzenie"))
+				|| (pogoda2.equals("pochmurno")))
 			ladnaPogoda();
-		
-		else if ((pogoda2.contains("deszcz"))||(pogoda2.contains("przelotne deszcze")))
+
+		else if ((pogoda2.contains("deszcz"))
+				|| (pogoda2.contains("przelotne deszcze")))
 			deszczowaPogoda();
-		
+
 		else if (pogoda2.equals("lekka m¿awka"))
-			ladnaPogoda();		
+			ladnaPogoda();
 		else if (pogoda2.contains("m¿awka"))
 			deszczowaPogoda();
-		
+
 		else if (pogoda2.equals("p³atki mg³y"))
 			ladnaPogoda();
 		else if (pogoda2.contains("zamglenia"))
@@ -223,21 +209,21 @@ public class Wypoczynek extends ListActivity {
 		else if (pogoda2.equals("gêsta mg³a"))
 			innaPogoda();
 		else if (pogoda2.contains("mg³a"))
-			ladnaPogoda();	
-		
+			ladnaPogoda();
+
 		else if (pogoda2.equals("gêsty œnieg"))
 			deszczowaPogoda();
 		else if (pogoda2.contains("œnieg"))
 			ladnaPogoda();
 		else if (pogoda2.contains("œnie¿ek"))
 			ladnaPogoda();
-		
+
 		else
 			// listArray.add("Nieznany rodzaj pogody");
 			innaPogoda();
 
-		//nie ma burzy - i tak powinno byæ "zostañ w domu
-		
+		// nie ma burzy - i tak powinno byæ "zostañ w domu
+
 		zalezne();
 	}
 
@@ -274,20 +260,20 @@ public class Wypoczynek extends ListActivity {
 		lista.add("Spacer z psem");
 		lista.add("Fotografowanie");
 		lista.add("Rysowanie krajobrazu");
-		//lista.add("Gra na gitarze");
+		// lista.add("Gra na gitarze");
 
 	}
 
 	public void niePada() {
-
-		lista.add("Zoo");
+		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w'))
+			lista.add("Zoo");
 
 	}
 
 	public void podDachem() {
 		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w')) {
 			lista.add("Kino");
-			lista.add("Kawa");
+			lista.add("Wyjœcie na kawê");
 			lista.add("Krêgle");
 			lista.add("Bilard");
 			lista.add("Muzeum");
@@ -308,8 +294,8 @@ public class Wypoczynek extends ListActivity {
 	}
 
 	public void okazjonalne() { // dodaæ warunki
-		//lista.add("Koncert");
-		//lista.add("Cyrk");
+		// lista.add("Koncert");
+		// lista.add("Cyrk");
 		// lista.add("IdŸ na wydarzenie w mieœcie");
 	}
 
@@ -331,11 +317,11 @@ public class Wypoczynek extends ListActivity {
 		if ((pogoda2.equals("pogodnie"))
 				|| (pogoda2.equals("niewielkie zachmurzenie"))
 				|| pogoda2.equals("ob³oki zanikaj¹ce")) {
-			if ((godzina >= wschodSlonca - 1) && (godzina <= wschodSlonca + 1)) {
+			if ((godzina >= wschodSlonca - 1) && (godzina <= wschodSlonca)) {
 				lista.add("Podziwiaj wschód s³oñca");
 			}
 
-			if ((godzina >= zachodSlonca - 1) && (godzina <= zachodSlonca + 1)) {
+			if ((godzina >= zachodSlonca - 1) && (godzina <= zachodSlonca)) {
 				lista.add("Podziwiaj zachód s³oñca");
 			}
 
@@ -355,7 +341,8 @@ public class Wypoczynek extends ListActivity {
 
 		if (poraRoku != 'z') {
 
-			if ((Double.valueOf(wind) > 25)&&(godzina>wschodSlonca)&&(godzina<zachodSlonca))
+			if ((Double.valueOf(wind) > 25) && (godzina > wschodSlonca)
+					&& (godzina < zachodSlonca))
 				lista.add("Puszczanie latawca");
 
 			if ((godzina < zachodSlonca) && (godzina > wschodSlonca)) {
@@ -386,7 +373,8 @@ public class Wypoczynek extends ListActivity {
 			f = "Centrum+handlowe";
 		} else if (wybrany.equals("Zoo")) {
 			f = "Ogród+zoologogiczny";
-		} else if ((wybrany.equals("Zajêcia plastyczne"))||(wybrany.equals("Zajêcia muzyczne"))) {
+		} else if ((wybrany.equals("Zajêcia plastyczne"))
+				|| (wybrany.equals("Zajêcia muzyczne"))) {
 			f = "Dom+kultury";
 		} else if ((wybrany.equals("Podziwiaj wschód s³oñca"))
 				|| (wybrany.equals("Podziwiaj zachód s³oñca"))
@@ -396,7 +384,11 @@ public class Wypoczynek extends ListActivity {
 				|| (wybrany.equals("Wyjazd na dzia³kê/wieœ"))
 				|| (wybrany.equals("Opalanie"))) {
 			f = "1";
-		} else {
+		} else if (wybrany.equals("Wyjœcie na kawê")) {
+			f = "Kawiarnia";
+		}
+
+		else {
 			wybrany = wybrany.replace(' ', '+');
 			f = wybrany;
 		}
@@ -404,4 +396,21 @@ public class Wypoczynek extends ListActivity {
 		return f;
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.about:
+			Intent intent = new Intent(this, Info.class);
+			startActivity(intent);
+			return true;
+		}
+		return false;
+	}
 }

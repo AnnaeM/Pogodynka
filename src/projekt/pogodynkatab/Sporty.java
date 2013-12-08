@@ -11,13 +11,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Sporty extends ListActivity {
 	public String pogoda;
@@ -43,6 +44,7 @@ public class Sporty extends ListActivity {
 
 		listArray = new ArrayList<String>();
 
+		//jeœli zosta³a pobrana pogoda
 		if (ForecastActivity._mainActivity != null) {
 			List<ForecastDay> simple10days = ForecastActivity._mainActivity.simple10day;
 			dzien = simple10days.get(0);
@@ -50,6 +52,7 @@ public class Sporty extends ListActivity {
 			if (ForecastActivity._mainActivity.display_location != null) {
 				Log.i("SPORTY", "Nie jest nullem");
 				try {
+					//pobranie wymaganych dancyh
 					city = ForecastActivity._mainActivity.display_location
 							.getString("city");
 					latitude = ForecastActivity._mainActivity.display_location
@@ -57,14 +60,14 @@ public class Sporty extends ListActivity {
 					longitude = ForecastActivity._mainActivity.display_location
 							.getString("longitude");
 					temp = Double
-							.valueOf(ForecastActivity._mainActivity.current_observation
-									.getString("feelslike_c"));
+							.valueOf(ForecastActivity._mainActivity.cndtns.temperaturaOdczuwalna);
 					pogoda = ForecastActivity._mainActivity.current_observation
 							.getString("weather");
 
-					Log.i("Pogoda", pogoda.toString());
+					//Log.i("Pogoda", pogoda.toString());
+					
+					//gdy stacja meteorologiczna nie poda rodzaju aktualnej pogody zostanie ona pobrana z prognozy godzinowej
 					if (pogoda.equals("")) {
-						// bo w Pu³awach nie ma pogody :c
 						pogoda = ForecastActivity._mainActivity.hourlyForecast.get(0).condition;					
 						Log.i("Pogoda awaryjna", pogoda);
 					}
@@ -74,6 +77,7 @@ public class Sporty extends ListActivity {
 
 					miesiac = Integer.parseInt(dzien.data.month);
 
+					//wyszukanie godziny pobranej z serwera
 					String godzinaString = "";
 					String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
 					int i = 0;
@@ -85,7 +89,7 @@ public class Sporty extends ListActivity {
 							+ aktualnaGodzina.charAt(i + 2)
 							+ aktualnaGodzina.charAt(i + 3);
 					godzina = Integer.parseInt(godzinaString);
-					Log.i("Wyluskana godzina", String.valueOf(godzina));
+					//Log.i("Wyluskana godzina", String.valueOf(godzina));
 
 					dzienTygodnia = dzien.data.weekDay;
 					poraRoku = poraRoku();
@@ -98,7 +102,7 @@ public class Sporty extends ListActivity {
 				}
 
 			} else {
-				Log.i("COSTAM", "Jest nullem :C");
+				Log.i("B³¹d", "Pusty parametr");
 			}
 		}
 
@@ -107,44 +111,42 @@ public class Sporty extends ListActivity {
 
 		}
 
+		//gdy nie uda³o siê dobraæ ¿adnej dyscypliny sportu
 		if (listArray.isEmpty()) {
 			listArray.add("Zostañ w domu");
 		}
 
+		//utworzenie listy
 		ArrayAdapter<String> array = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, listArray);
 		setListAdapter(array);
 		ListView listView = getListView();
 
+		//gdy zostanie wybrany element z listy
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				// Toast.makeText(getApplicationContext(),((TextView)
-				// view).getText(), Toast.LENGTH_SHORT).show();
-
-				// String uri = "http://maps.google.com/maps?saddr="+"geo:"+
-				// latitude + "," + longitude +"&q="+((TextView)
-				// view).getText();
-
+				
+				//wyszukiwanie w Google Maps
 				String wyszukiwanie = fraza((String) ((TextView) view)
 						.getText());
-
-				String uri = "https://maps.google.pl/maps?q=" + city + "+"
-						+ wyszukiwanie;
-				Log.i("URL", uri);
-				startActivity(new Intent(android.content.Intent.ACTION_VIEW,
-						Uri.parse(uri)));
-
+				
+				if (!wyszukiwanie.equals("1")) {
+					String uri = "https://maps.google.pl/maps?q=" + city + "+"
+							+ wyszukiwanie;
+					Log.i("URL", uri);
+					startActivity(new Intent(
+							android.content.Intent.ACTION_VIEW, Uri.parse(uri)));
+				}
 			}
-
 		});
 	}
 
 	public void wyborSportow() {
 
-		
+		//ujednolicenie znaków w pogodzie
 		String pogoda2 = pogoda.toLowerCase();		
 		if ((pogoda2.equals("pogodnie"))||(pogoda2.equals("przewaga chmur"))
 				||(pogoda2.equals("ob³oki zanikaj¹ce"))||(pogoda2.equals("niewielkie zachmurzenie"))
@@ -179,9 +181,10 @@ public class Sporty extends ListActivity {
 			// listArray.add("Nieznany rodzaj pogody");
 			innaPogoda(poraDnia);
 
-		//nie ma burzy - i tak powinno byæ "zostañ w domu
+		//nie ma burzy - i tak powinno byæ "zostañ w domu"
 	}
 
+	//funkcja okreœlaj¹ca porê dnia
 	public char poraDnia() {
 
 		char pora;
@@ -204,6 +207,7 @@ public class Sporty extends ListActivity {
 		return pora;
 	}
 
+	//funckja okreœlaj¹ca porê roku
 	public char poraRoku() {
 
 		// mo¿na dodaæ np. przedwioœnie
@@ -219,7 +223,6 @@ public class Sporty extends ListActivity {
 		{
 			c = 'z';
 		}
-
 		return c;
 
 	}
@@ -295,7 +298,7 @@ public class Sporty extends ListActivity {
 				}
 			}
 
-			else {
+			else if((miesiac==1)||(miesiac==2)){
 				listArray.add("£y¿wy");
 				listArray.add("Narciarstwo");
 				listArray.add("Hokej");
@@ -317,16 +320,6 @@ public class Sporty extends ListActivity {
 		listArray.add("Serfowanie");
 		listArray.add("Siatkówka pla¿owa");
 
-	}
-
-	// gdy bêdzie zaznaczony checkbox
-	public void ekstremalne() {
-		listArray.add("Parkour");
-		listArray.add("Bungee");
-		listArray.add("Paralotnia");
-		listArray.add("Skok ze spadochronem");
-		listArray.add("Windsurfing");
-		listArray.add("Lot balonem");
 	}
 
 	public String fraza(String wybrany) {
@@ -352,12 +345,34 @@ public class Sporty extends ListActivity {
 			f = "Stok+narciarski";
 		} else if (wybrany.equals("Trening sztuk walki")) {
 			f = "Szko³a+sztuk+walki";
-		} else {
+		} else if (wybrany.equals("Zostañ w domu")){
+			f="1";
+		}
+		else {
 			wybrany = wybrany.replace(' ', '+');
 			f = wybrany;
 		}
 		return f;
 
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+	    switch(item.getItemId()){
+	    case R.id.about:
+	        Intent intent = new Intent(this, Info.class);
+	        startActivity(intent);
+	        return true;            
+	    }
+	    return false;
 	}
 
 }

@@ -1,14 +1,17 @@
 package projekt.pogodynkatab;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,23 +29,7 @@ public class Pogoda extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pogoda);
 		if (ForecastActivity._mainActivity != null) {
-			ikonka = (ImageView) findViewById(R.id.iconIV);
-		/*	URL url;
-			Bitmap bmp;
-			try {
-				url = new URL(ForecastActivity._mainActivity.cndtns.iconURL);
-				bmp = BitmapFactory.decodeStream(url.openConnection()
-						.getInputStream());
-				ikonka.setImageBitmap(bmp);
-			} catch (MalformedURLException ee) {
-				// TODO Auto-generated catch block
-				ee.printStackTrace();
-			} catch (IOException ee) {
-				// TODO Auto-generated catch block
-				ee.printStackTrace();
-			}*/
-			
-			
+			ikonka = (ImageView) findViewById(R.id.iconIV);		
 			lokacja = (TextView) findViewById(R.id.lokacja2TB);
 			dzisiaj = (TextView) this.findViewById(R.id.data);
 			try {
@@ -78,14 +65,18 @@ public class Pogoda extends Activity {
 				char first = Character.toUpperCase(warunkiPogodowe.charAt(0));
             	warunkiPogodowe2 = first + warunkiPogodowe.substring(1);
 
+            	
+            	String kierunekWiatru = wiatr(ForecastActivity._mainActivity.cndtns.windDir);          	            	
+            	DecimalFormat df = new DecimalFormat("#.#");
+            	            	
 				String pogoda = warunkiPogodowe2
 						+ "\nTemp: "
 						+ ForecastActivity._mainActivity.cndtns.tempC
-						+ "C 	Odczuwalna:"
-						+ ForecastActivity._mainActivity.cndtns.feelslikeC
-						+ "C\nWiatr w porywach do "
-						+ ForecastActivity._mainActivity.cndtns.windDir
-						+ ", "
+						+ "°C 	Odczuwalna: "
+						+ df.format(ForecastActivity._mainActivity.cndtns.temperaturaOdczuwalna)
+						+ "°C\nWiatr "
+						+ kierunekWiatru
+						+ ",  w porywach do "
 						+ ForecastActivity._mainActivity.cndtns.windKph
 						+ "km/h"
 						+ "\nOpady "
@@ -101,20 +92,6 @@ public class Pogoda extends Activity {
 						+ "\nWilgotnoœæ "
 						+ ForecastActivity._mainActivity.cndtns.relativeHumidity;
 				pogoda1.setText(pogoda);
-				
-				/*int godzina;
-				String godzinaString = "";
-				String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
-				int i = 0;
-				while (aktualnaGodzina.charAt(i) != ',') {
-					i++;
-				}
-
-				godzinaString = godzinaString
-						+ aktualnaGodzina.charAt(i + 2)
-						+ aktualnaGodzina.charAt(i + 3);
-				godzina = Integer.parseInt(godzinaString);
-				*/
 				
 				Time now = new Time();
 				now.setToNow();
@@ -147,8 +124,35 @@ public class Pogoda extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.pogoda, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+	    switch(item.getItemId()){
+	    case R.id.about:
+	        Intent intent = new Intent(this, Info.class);
+	        startActivity(intent);
+	        return true;            
+	    }
+	    return false;
+	}
+	
+	public String wiatr(String kierunekWiatru){
+		String wynik;
+		if (kierunekWiatru.equals("East"))
+			wynik = "wschodni";
+    	else if (kierunekWiatru.equals("West"))
+    		wynik = "zachodni";
+    	else if (kierunekWiatru.equals("North"))
+    		wynik = "pó³nocny";
+    	else if (kierunekWiatru.equals("South"))
+    		wynik = "po³udniowy";
+    	else if (kierunekWiatru.equals("Variable"))
+    		wynik = "zmienny";
+    	else wynik=kierunekWiatru;
+		return wynik;
+	}
 }

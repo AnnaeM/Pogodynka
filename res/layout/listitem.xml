@@ -7,8 +7,7 @@
  
     <ImageView
         android:id="@+id/icon"
-        android:layout_gravity="left"
-        
+        android:layout_gravity="left"       
         android:layout_width="100dp"
     	android:layout_height="100dp"
     	android:src="@drawable/ic_launcher" 

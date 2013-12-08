@@ -21,9 +21,9 @@ import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -46,101 +46,103 @@ public class ForecastActivity extends TabActivity {
 	public boolean pobrano;
 	public String aktualnaGodzina;
 	public Astronomy astronomia;
+	//public double temperaturaOdczuwalna;
 
 	public static ForecastActivity _mainActivity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		pobrano = false;
 
 		super.onCreate(savedInstanceState);
 		_mainActivity = this;
 		setContentView(R.layout.activity_forecast);
-		Intent intent = getIntent();
+		// Intent intent = getIntent();
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			nazwaMiasta = extras.getString("Lokacja");
-			// TextView tv = (TextView) this.findViewById(R.id.lokacja2TB);
-			// tv.setText(nazwaMiasta);
 			pobierzPrognoze(nazwaMiasta);
-			Log.i("TUTAJ!", "Tutaj");
-
 		}
 
 		if (pobrano) {
 			// ZAK£ADKI
-			TabHost tabHost = getTabHost(); // tab dla phoTOS
-			TabSpec pogospec = tabHost.newTabSpec("Pogoda"); // tytu³ i zdjecie
+			TabHost tabHost = getTabHost();
+
+			// aktualna pogoda
+			TabSpec pogospec = tabHost.newTabSpec("Pogoda");
 			pogospec.setIndicator("Pogoda",
-					getResources().getDrawable(R.drawable.icon_pogoda_tab));
+					getResources().getDrawable(R.drawable.icon_pogoda_tab)); // tytu³
+																				// i
+																				// zdjecie
 			Intent pogodaIntent = new Intent(this, Pogoda.class);
 			pogospec.setContent(pogodaIntent);
 
-			// Tab for Songs
-			TabSpec ubraniaSpec = tabHost.newTabSpec("Ubrania");
-			ubraniaSpec.setIndicator("Ubrania",
-					getResources().getDrawable(R.drawable.icon_ubrania_tab));
-			Intent ubraniaIntent = new Intent(this, Ubrania.class);
-			ubraniaSpec.setContent(ubraniaIntent);
-
-			// Tab for Videos
-			TabSpec sportSpec = tabHost.newTabSpec("Sporty");
-			sportSpec.setIndicator("Sporty",
-					getResources().getDrawable(R.drawable.icon_sport_tab));
-			Intent sportIntent = new Intent(this, Sporty.class);
-			sportSpec.setContent(sportIntent);
-
-			// Tab dla wypoczynku
-			TabSpec wypSpec = tabHost.newTabSpec("Wypoczynek");
-			wypSpec.setIndicator("Wypoczynek",
-					getResources().getDrawable(R.drawable.icon_wypoczynek_tab));
-			Intent wypIntent = new Intent(this, Wypoczynek.class);
-			wypSpec.setContent(wypIntent);
-
-			// Tab dla godzinowej?
+			// godzinowa
 			TabSpec godzSpec = tabHost.newTabSpec("Godzinowa");
 			godzSpec.setIndicator("Godzinowa",
 					getResources().getDrawable(R.drawable.icon_pog_godz_tab));
 			Intent godzIntent = new Intent(this, PogodaGodz.class);
 			godzSpec.setContent(godzIntent);
 
-			// Tab dla nastêpnych dni
+			// nastêpne dni
 			TabSpec dni10Spec = tabHost.newTabSpec("10 dni");
 			dni10Spec.setIndicator("10 dni",
 					getResources().getDrawable(R.drawable.icon_pog_10dni_tab));
 			Intent dni10Intent = new Intent(this, Pogoda10dni.class);
 			dni10Spec.setContent(dni10Intent);
-	
-		    
-			// Adding all TabSpec to TabHost
+
+			// sporty
+			TabSpec sportSpec = tabHost.newTabSpec("Sporty");
+			sportSpec.setIndicator("Sporty",
+					getResources().getDrawable(R.drawable.icon_sport_tab));
+			Intent sportIntent = new Intent(this, Sporty.class);
+			sportSpec.setContent(sportIntent);
+
+			// wypoczynek
+			TabSpec wypSpec = tabHost.newTabSpec("Wypoczynek");
+			wypSpec.setIndicator("Wypoczynek",
+					getResources().getDrawable(R.drawable.icon_wypoczynek_tab));
+			Intent wypIntent = new Intent(this, Wypoczynek.class);
+			wypSpec.setContent(wypIntent);
+
+			// ubrania
+			TabSpec ubraniaSpec = tabHost.newTabSpec("Ubrania");
+			ubraniaSpec.setIndicator("Ubrania",
+					getResources().getDrawable(R.drawable.icon_ubrania_tab));
+			Intent ubraniaIntent = new Intent(this, Ubrania.class);
+			ubraniaSpec.setContent(ubraniaIntent);
+
+			// wstawienie TabSpec do TabHost
 			tabHost.addTab(pogospec); // pogoda na teraz
 			tabHost.addTab(godzSpec); // godzinowa
 			tabHost.addTab(dni10Spec); // 10dniowa
 			tabHost.addTab(sportSpec); // sporty
 			tabHost.addTab(wypSpec); // wypoczynek
 			tabHost.addTab(ubraniaSpec); // ubrania
-			
+
 		}
 	}
 
 	public void pobierzPrognoze(String city) {
-		// TODO Auto-generated method stub
 
+		// ustawianie adresu URL w zale¿noœci od wybranej opcji (wpisane
+		// miasto/gps)
 		final String GET_WEATHER_URL;
-		if (Character.isDigit(city.charAt(0))) {
+		if (Character.isDigit(city.charAt(0))) { // jeœli przekazana zosta³a
+													// d³ugoœæ i szerokoœæ geog.
 			GET_WEATHER_URL = WEATHER_URL + city + ".json";
 		} else {
 			GET_WEATHER_URL = WEATHER_URL + "Poland/" + city + ".json";
 		}
-		// TODO Auto-generated method stub
+
 		String request = GET_WEATHER_URL;
 		HttpResponse rp = null;
-		// JSONObject jObject = null;
+
+		// pobieranie danych pogodowych
 		jObject = null;
 		try {
 			rp = (new DefaultHttpClient()).execute(new HttpPost(request));
-			Log.i("COS", "W pierwszym traju");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -158,6 +160,7 @@ public class ForecastActivity extends TabActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 			BufferedReader r = new BufferedReader(new InputStreamReader(
 					inputStream));
 			StringBuilder total = new StringBuilder();
@@ -170,10 +173,11 @@ public class ForecastActivity extends TabActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			// tworzenie obiektu JSON
 			try {
 				inputStream.close();
 				json_string_response = total.toString();
-				Log.i("COS", json_string_response);
+				// Log.i("COS", json_string_response);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -185,18 +189,17 @@ public class ForecastActivity extends TabActivity {
 				e.printStackTrace();
 			}
 			try {
+
 				current_observation = jObject
 						.getJSONObject("current_observation");
 				JSONObject forecast = jObject.getJSONObject("forecast");
 
+				// obróbka pobranych danych - tworzenie obiektów klas
+				// pomocniczych
 				obrabianieConditions(current_observation);
-
 				obrabianieTxtForecast(forecast);
-
 				obrabianieSimpleForecast(forecast);
-
 				obrabianieAstronomii(jObject);
-
 				obrabianieGodzinowej(jObject);
 
 				JSONObject forecast10d = jObject.getJSONObject("forecast");
@@ -218,7 +221,6 @@ public class ForecastActivity extends TabActivity {
 					dzien.fcttextMetric = tmp.getString("fcttext_metric");
 					dzien.pop = tmp.getString("pop");
 					this.txt10day.add(dzien);
-					Log.i(dzien.title, dzien.fcttextMetric);
 				}
 
 				/*
@@ -285,44 +287,18 @@ public class ForecastActivity extends TabActivity {
 					dzien.snowAllDay = pom3.getString("cm");
 					this.simple10day.add(dzien);
 
-					/*
-					 * if (i==0){ doAktywnosci.put("day",
-					 * Integer.parseInt(data.day)); doAktywnosci.put("month",
-					 * Integer.parseInt(data.month));
-					 * doAktywnosci.put("hour",Integer.parseInt(data.hour));
-					 * doAktywnosci.put("min",Integer.parseInt(data.min));
-					 * doAktywnosci.put("weekDay", data.weekDay);
-					 * 
-					 * }
-					 */
 					pobrano = true;
-				}
-				for (ForecastDay d : this.simpleForecast) {
-					Log.i("10DAYS!!! " + d.data.day, d.data.pretty + " "
-							+ d.conditions);
 				}
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				// e.printStackTrace();
 
-				/*
-				 * TextView tv = (TextView) this.findViewById(R.id.lokacja2TB);
-				 * TextView data = (TextView) findViewById(R.id.data);
-				 * 
-				 * Button b1 = (Button)findViewById(R.id.sporty); Button b2 =
-				 * (Button)findViewById(R.id.wypoczynek);
-				 * 
-				 * tv.setText("Przepraszamy!");
-				 * data.setText("Nie znaleziono podanego miasta: "+nazwaMiasta);
-				 * b1.setVisibility(View.INVISIBLE);
-				 * b2.setVisibility(View.INVISIBLE);
-				 */
-
-				Log.i("ERROR", "nie znaleziono miasta");
+				// na serwerze nie ma podanego miasta
+				Log.i("ERROR", "Nie znaleziono miasta");
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setTitle("Przepraszamy!")
-						.setMessage("Nie odnaleziono podanego miasta.")
+						.setMessage(
+								"W podanym mieœcie nie ma stacji pomiarowej.")
 						.setPositiveButton("OK",
 								new DialogInterface.OnClickListener() {
 
@@ -341,19 +317,8 @@ public class ForecastActivity extends TabActivity {
 		}
 
 		else {
-			/*
-			 * TextView tv = (TextView) this.findViewById(R.id.lokacja2TB);
-			 * TextView data = (TextView) findViewById(R.id.data);
-			 * 
-			 * Button b1 = (Button)findViewById(R.id.sporty); Button b2 =
-			 * (Button)findViewById(R.id.wypoczynek);
-			 * 
-			 * tv.setText("Przepraszamy!");
-			 * data.setText("Nie uda³o siê po³¹czyæ z serwerem.");
-			 * b1.setVisibility(View.INVISIBLE);
-			 * b2.setVisibility(View.INVISIBLE);
-			 */
-			Log.i("ERROR", "nie uda³o siê po³¹czyæ z serwerem");
+			// brak po³¹czenia z serwerem
+			Log.i("ERROR", "Nie uda³o siê po³¹czyæ z serwerem");
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Przepraszamy!")
@@ -384,7 +349,6 @@ public class ForecastActivity extends TabActivity {
 		this.hourlyForecast = new ArrayList<HourlyForecast>();
 
 		for (int i = 0; i < hourly.length(); i++) {
-			Log.i("HOURLY " + String.valueOf(i), String.valueOf(i));
 
 			HourlyForecast hf = new HourlyForecast();
 			JSONObject pom3 = new JSONObject();
@@ -399,7 +363,6 @@ public class ForecastActivity extends TabActivity {
 			pom.yearDay = Integer.parseInt(pom3.getString("yday"));
 			pom.monthDay = Integer.parseInt(pom3.getString("mday"));
 
-			Log.i("MONTH DAY", String.valueOf(pom.monthDay));
 			hf.czas = pom;
 
 			hf.monAbbrev = pom3.getString("mon_abbrev");
@@ -439,11 +402,6 @@ public class ForecastActivity extends TabActivity {
 			hf.snow = pom3.getString("metric");
 
 			hourlyForecast.add(hf);
-			Log.i(String.valueOf(i), hf.feelslike + " " + hf.czas.monthDay
-					+ " " + hf.czas.toString());
-
-			// JSONObject estimated =
-			// current_observation.getJSONObject("estimated");
 			aktualnaGodzina = current_observation.getString("observation_time");
 		}
 	}
@@ -451,7 +409,7 @@ public class ForecastActivity extends TabActivity {
 	public void obrabianieConditions(JSONObject current_observation)
 			throws JSONException {
 		// Obrabianie conditions
-		Log.i("COS", "CURRENT OBS." + current_observation.toString());
+
 		disLoc = new Location2();
 		display_location = current_observation
 				.getJSONObject("display_location");
@@ -462,15 +420,7 @@ public class ForecastActivity extends TabActivity {
 		disLoc.setElevation(display_location.getString("elevation"));
 		disLoc.setLatitude(display_location.getString("latitude"));
 		disLoc.setLongitude(display_location.getString("longitude"));
-		Log.i("disLoc", disLoc.getLatitude() + " " + disLoc.getLongitude()
-				+ " " + disLoc.getFull());
 
-		// aktualnaGodzina=display_location.getString("observation_time");
-
-		/*
-		 * TextView tv = (TextView) this.findViewById(R.id.lokacja2TB);
-		 * tv.setText(display_location.getString("city"));
-		 */
 		obsLoc = new Location2();
 		JSONObject observation_location = current_observation
 				.getJSONObject("observation_location");
@@ -482,8 +432,6 @@ public class ForecastActivity extends TabActivity {
 		obsLoc.setElevation(observation_location.getString("elevation"));
 		obsLoc.setLatitude(observation_location.getString("latitude"));
 		obsLoc.setLongitude(observation_location.getString("longitude"));
-		Log.i("obsLoc", obsLoc.getLatitude() + " " + obsLoc.getLongitude()
-				+ " " + obsLoc.getFull());
 
 		cndtns = new Conditions();
 		cndtns.dewpointC = current_observation.getString("dewpoint_c");
@@ -526,39 +474,17 @@ public class ForecastActivity extends TabActivity {
 		cndtns.windMph = current_observation.getString("wind_mph");
 		cndtns.windString = current_observation.getString("wind_string");
 		cndtns.weather = current_observation.getString("weather");
-		Log.i("COS. Conditions:", cndtns.toString() + " "
-				+ cndtns.feelslikeString + " " + cndtns.weather);
-
-		// -------------------------------
-		/*
-		 * TextView pogoda = (TextView) findViewById(R.id.pogoda);
-		 * pogoda.setText("W tej chwili:\n" + cndtns.feelslikeString + "\n" +
-		 * cndtns.weather + "\n");
-		 */
-		// ----------------------------
-
-		/*
-		 * doAktywnosci.put("city",display_location.getString("city"));
-		 * doAktywnosci.put("latitude", display_location.getString("latitude"));
-		 * doAktywnosci.put("longitude",
-		 * display_location.getString("longitude"));
-		 * doAktywnosci.put("feelslike_c",
-		 * Double.valueOf(current_observation.getString("feelslike_c")));
-		 * doAktywnosci.put("weather",
-		 * current_observation.getString("weather"));
-		 * doAktywnosci.put("wind_mph",
-		 * current_observation.getString("wind_mph"));
-		 */
-
+		
+		cndtns.temperaturaOdczuwalna = obliczTemperatureOdczuwalna(cndtns.tempC, cndtns.windKph);
+		
+		
 	}
 
 	public void obrabianieTxtForecast(JSONObject forecast) throws JSONException {
-		Log.i("COS", "FORECAST " + forecast.toString());
 		JSONObject txtForecast = forecast.getJSONObject("txt_forecast");
 		JSONArray txtForecastDay = txtForecast.getJSONArray("forecastday");
 		this.txtForecast = new ArrayList<ForecastDay>();
 		for (int i = 0; i < txtForecastDay.length(); i++) {
-			Log.i("forecast", txtForecastDay.getJSONObject(i).toString());
 			JSONObject tmp = txtForecastDay.getJSONObject(i);
 			ForecastDay dzien = new ForecastDay();
 			dzien.period = tmp.getString("period");
@@ -571,15 +497,6 @@ public class ForecastActivity extends TabActivity {
 			this.txtForecast.add(dzien);
 		}
 
-		/*
-		 * int j = 1; TextView pogoda1 = (TextView)
-		 * this.findViewById(R.id.pogoda1);
-		 * 
-		 * for (ForecastDay d : this.txtForecast) { Log.i("txtfrcst", d.title +
-		 * " " + d.fcttextMetric); if (j == 1) { pogoda1.setText(d.fcttextMetric
-		 * + "\n"); } j++; }
-		 */
-		Log.i("txt_forecast", txtForecast.toString());
 	}
 
 	public void obrabianieSimpleForecast(JSONObject forecast)
@@ -591,7 +508,6 @@ public class ForecastActivity extends TabActivity {
 		JSONArray splForecastDay = simpleForecast.getJSONArray("forecastday");
 		this.simpleForecast = new ArrayList<ForecastDay>();
 		for (int i = 0; i < splForecastDay.length(); i++) {
-			Log.i("simple", splForecastDay.getJSONObject(i).toString());
 			JSONObject tmp = splForecastDay.getJSONObject(i);
 			JSONObject tempDate = tmp.getJSONObject("date");
 			Date data = new Date();
@@ -647,18 +563,6 @@ public class ForecastActivity extends TabActivity {
 			this.simpleForecast.add(dzien);
 		}
 
-		/*
-		 * // TextView data2 = (TextView) this.findViewById(R.id.data2);
-		 * TextView dzisiaj = (TextView) this.findViewById(R.id.data);
-		 * 
-		 * int j = 1; for (ForecastDay d : this.simpleForecast) {
-		 * Log.i(d.data.day, d.data.pretty + " " + d.conditions);
-		 * 
-		 * if (j == 1) { dzisiaj.setText("Dzisiaj jest " + d.data.weekDay + ", "
-		 * + d.data.day + " " + d.data.monthName + " " + d.data.year + "\n"); //
-		 * data2.setText(d.conditions + "\n"); } j++; }
-		 */
-		Log.i("simpleforecast", simpleForecast.toString());
 	}
 
 	public void obrabianieAstronomii(JSONObject jObject) throws JSONException {
@@ -676,7 +580,6 @@ public class ForecastActivity extends TabActivity {
 		g.hour = Integer.parseInt(pom3.getString("hour"));
 		g.minute = Integer.parseInt(pom3.getString("minute"));
 		astronomia.moonrise = g;
-		Log.i("ASTRONOMY moonrise", pom3.toString() + "/" + g.toString());
 		g = new Time();
 		pom3 = astronomy.getJSONObject("sunset");
 		g.hour = Integer.parseInt(pom3.getString("hour"));
@@ -693,22 +596,18 @@ public class ForecastActivity extends TabActivity {
 		g.hour = Integer.parseInt(pom3.getString("hour"));
 		g.minute = Integer.parseInt(pom3.getString("minute"));
 		astronomia.sunset = g;
-		Log.i("CZAS", astronomia.moonrise.hour + " "
-				+ astronomia.moonrise.minute);
-
-		Log.i("astronomy", astronomy.toString());
-
-		/*
-		 * TextView astro = (TextView) findViewById(R.id.astronomy);
-		 * astro.setText("Astronomia: " + "\nWschód s³oñca " +
-		 * astronomia.sunrise.hour + "." + astronomia.sunrise.minute +
-		 * "\nZachód s³oñca " + astronomia.sunset.hour + "." +
-		 * astronomia.sunset.minute + "\nWschód ksiê¿yca " +
-		 * astronomia.moonrise.hour + "." + astronomia.moonrise.minute +
-		 * "\nZachód ksiê¿yca " + astronomia.moonset.hour + "." +
-		 * astronomia.moonset.minute + "\nFaza ksiê¿yca " +
-		 * astronomia.phaseofMoon + "\n");
-		 */
 	}
 
+	public double obliczTemperatureOdczuwalna (String temperatura, String wiatr){
+		double wynik=-999.999;      	
+		
+		double V=0.0;
+		double tempWC = Double.valueOf(temperatura);
+		
+		V=Math.pow(Double.valueOf(wiatr), 0.16);
+		wynik=13.12+(0.6215*tempWC)-(11.37*V)+(0.3965*tempWC*V);
+			
+		Log.i("Temp odczuwalna",String.valueOf(wynik));
+		return wynik;
+	}
 }
