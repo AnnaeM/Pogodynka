@@ -46,7 +46,7 @@ public class ForecastActivity extends TabActivity {
 	public boolean pobrano;
 	public String aktualnaGodzina;
 	public Astronomy astronomia;
-	//public double temperaturaOdczuwalna;
+	// public double temperaturaOdczuwalna;
 
 	public static ForecastActivity _mainActivity;
 
@@ -474,10 +474,10 @@ public class ForecastActivity extends TabActivity {
 		cndtns.windMph = current_observation.getString("wind_mph");
 		cndtns.windString = current_observation.getString("wind_string");
 		cndtns.weather = current_observation.getString("weather");
-		
-		cndtns.temperaturaOdczuwalna = obliczTemperatureOdczuwalna(cndtns.tempC, cndtns.windKph);
-		
-		
+
+		cndtns.temperaturaOdczuwalna = obliczTemperatureOdczuwalna(
+				cndtns.tempC, cndtns.windKph);
+
 	}
 
 	public void obrabianieTxtForecast(JSONObject forecast) throws JSONException {
@@ -598,16 +598,18 @@ public class ForecastActivity extends TabActivity {
 		astronomia.sunset = g;
 	}
 
-	public double obliczTemperatureOdczuwalna (String temperatura, String wiatr){
-		double wynik=-999.999;      	
-		
-		double V=0.0;
+	public double obliczTemperatureOdczuwalna(String temperatura, String wiatr) {
+		double wynik = Double.valueOf(temperatura);
+
+		double V = 0.0;
 		double tempWC = Double.valueOf(temperatura);
-		
-		V=Math.pow(Double.valueOf(wiatr), 0.16);
-		wynik=13.12+(0.6215*tempWC)-(11.37*V)+(0.3965*tempWC*V);
-			
-		Log.i("Temp odczuwalna",String.valueOf(wynik));
+
+		if (V != 0) {
+			V = Math.pow(Double.valueOf(wiatr), 0.16);
+			wynik = 13.12 + (0.6215 * tempWC) - (11.37 * V)
+					+ (0.3965 * tempWC * V);
+		}
+		Log.i("Temp odczuwalna", String.valueOf(wynik));
 		return wynik;
 	}
 }

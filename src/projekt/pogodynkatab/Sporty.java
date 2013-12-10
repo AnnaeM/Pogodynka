@@ -153,21 +153,19 @@ public class Sporty extends ListActivity {
 				||(pogoda2.equals("pochmurno")))
 			ladnaPogoda(poraDnia);
 		
-		else if ((pogoda2.contains("deszcz"))||(pogoda2.contains("przelotne deszcze")))
+		else if ((pogoda2.contains("deszcz")))
 			deszczowaPogoda(poraDnia);
-		
-		else if (pogoda2.equals("lekka m¿awka"))
-			ladnaPogoda(poraDnia);		
+				
 		else if (pogoda2.contains("m¿awka"))
 			deszczowaPogoda(poraDnia);
 		
-		else if (pogoda2.equals("p³atki mg³y"))
-			ladnaPogoda(poraDnia);
+
 		else if (pogoda2.contains("zamglenia"))
 			ladnaPogoda(poraDnia);
 		else if (pogoda2.equals("gêsta mg³a"))
-			innaPogoda(poraDnia);
-		else if (pogoda2.contains("mg³a"))
+			deszczowaPogoda(poraDnia);
+			//innaPogoda(poraDnia);
+		else if (pogoda2.contains("mg³"))//p³atki mg³y/mg³a
 			ladnaPogoda(poraDnia);	
 		
 		else if (pogoda2.equals("gêsty œnieg"))
@@ -177,9 +175,9 @@ public class Sporty extends ListActivity {
 		else if (pogoda2.contains("œnie¿ek"))
 			ladnaPogoda(poraDnia);
 		
-		else
+		
 			// listArray.add("Nieznany rodzaj pogody");
-			innaPogoda(poraDnia);
+			//innaPogoda(poraDnia);
 
 		//nie ma burzy - i tak powinno byæ "zostañ w domu"
 	}
@@ -239,7 +237,7 @@ public class Sporty extends ListActivity {
 		naHali();
 	}
 
-	public void innaPogoda(char poraDnia) {
+	/*public void innaPogoda(char poraDnia) {
 		// gêsta mgla itd
 		if ((temp > -30) && (temp < 35)) {
 			listArray.add("Bieganie");
@@ -248,7 +246,7 @@ public class Sporty extends ListActivity {
 		}
 		naHali();
 
-	}
+	}*/
 
 	public void standardowe() {
 		listArray.add("Bieganie");
@@ -274,11 +272,11 @@ public class Sporty extends ListActivity {
 				listArray.add("Szermierka");
 				listArray.add("£ucznictwo");
 				listArray.add("Strzelnica");
-				listArray.add("Wspinaczka");
+				listArray.add("Œciana wspinaczkowa");
 				listArray.add("Trening sztuk walki");
 				listArray.add("Basen");
 				listArray.add("Ping-pong");
-				listArray.add("Gocarty");
+				
 			}
 		}
 	}
@@ -287,19 +285,19 @@ public class Sporty extends ListActivity {
 
 		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w')) {
 			if (poraRoku != 'z') {
-				listArray.add("BMX");			
+				listArray.add("BMX");	
+				listArray.add("Gokarty");
 				listArray.add("Golf");
 				listArray.add("Jazda konna");
-
-				if (!dzienTygodnia.equals("Niedziela")) {
-					listArray.add("Quady");
-					listArray.add("Paintball");
-					listArray.add("Tenis");
-				}
+				listArray.add("Paintball");
+				listArray.add("Tenis");
+				listArray.add("Quady");
+				
 			}
 
-			else if((miesiac==1)||(miesiac==2)){
+			else {
 				listArray.add("£y¿wy");
+				listArray.add("Snowboard");
 				listArray.add("Narciarstwo");
 				listArray.add("Hokej");
 				listArray.add("Sanki");
@@ -341,7 +339,7 @@ public class Sporty extends ListActivity {
 			f = "Stadnina+koni";
 		} else if ((wybrany.equals("£y¿wy")) || (wybrany.equals("Hokej"))) {
 			f = "Lodowisko";
-		} else if (wybrany.equals("Narciarstwo")) {
+		} else if ((wybrany.equals("Narciarstwo"))||(wybrany.equals("Snowboard"))) {
 			f = "Stok+narciarski";
 		} else if (wybrany.equals("Trening sztuk walki")) {
 			f = "Szko³a+sztuk+walki";

@@ -56,7 +56,7 @@ public class Ubrania extends Activity {
 					// sprawdza, czy w ci¹gu 3h nie bêdzie deszczu
 					bedzieDeszcz = false;
 
-					for (int i = 0; i < 2; i++) {
+					for (int i = 0; i <= 2; i++) {
 
 						String zapowiedz = ForecastActivity._mainActivity.hourlyForecast
 								.get(i).condition.toLowerCase();
@@ -105,7 +105,7 @@ public class Ubrania extends Activity {
 		 * new LayerDrawable(layers); obrazek.setImageDrawable(layerDrawable);
 		 */
 
-		if (temp < -5) {
+		if (temp <= 0) {
 			Drawable[] layers = new Drawable[4];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
@@ -128,13 +128,25 @@ public class Ubrania extends Activity {
 
 		}
 
-		else if (temp < 18) {
+		else if (temp < 10) {
 			// 10-17
 			Drawable[] layers = new Drawable[4];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
 			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
 			layers[3] = r.getDrawable(R.drawable.kurtka_k);
+			LayerDrawable layerDrawable = new LayerDrawable(layers);
+			obrazek.setImageDrawable(layerDrawable);
+
+		}
+		
+		else if (temp < 18) {
+			// 10-17
+			Drawable[] layers = new Drawable[4];
+			layers[0] = r.getDrawable(R.drawable.kobieta);
+			layers[1] = r.getDrawable(R.drawable.buty_k);
+			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[3] = r.getDrawable(R.drawable.plaszcz_k); 
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
 
@@ -157,7 +169,7 @@ public class Ubrania extends Activity {
 			Drawable[] layers = new Drawable[4];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.sandalki_k);
-			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[2] = r.getDrawable(R.drawable.spodniekr_k);
 			layers[3] = r.getDrawable(R.drawable.tshirt_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
@@ -213,7 +225,7 @@ public class Ubrania extends Activity {
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.buty_k);
 			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
-			layers[3] = r.getDrawable(R.drawable.kurtka_k);
+			layers[3] = r.getDrawable(R.drawable.plaszcz_k);
 			layers[4] = r.getDrawable(R.drawable.parasolka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);
 			obrazek.setImageDrawable(layerDrawable);
@@ -238,7 +250,7 @@ public class Ubrania extends Activity {
 			Drawable[] layers = new Drawable[5];
 			layers[0] = r.getDrawable(R.drawable.kobieta);
 			layers[1] = r.getDrawable(R.drawable.sandalki_k);
-			layers[2] = r.getDrawable(R.drawable.spodniedl_k);
+			layers[2] = r.getDrawable(R.drawable.spodniekr_k);
 			layers[3] = r.getDrawable(R.drawable.tshirt_k);
 			layers[4] = r.getDrawable(R.drawable.parasolka_k);
 			LayerDrawable layerDrawable = new LayerDrawable(layers);

@@ -197,8 +197,6 @@ public class Wypoczynek extends ListActivity {
 				|| (pogoda2.contains("przelotne deszcze")))
 			deszczowaPogoda();
 
-		else if (pogoda2.equals("lekka m¿awka"))
-			ladnaPogoda();
 		else if (pogoda2.contains("m¿awka"))
 			deszczowaPogoda();
 
@@ -230,7 +228,6 @@ public class Wypoczynek extends ListActivity {
 	public void ladnaPogoda() {
 		if ((temp > -30) && (temp < 35)) {
 			podstawowe();
-			niePada();
 			okazjonalne();
 		}
 
@@ -250,6 +247,7 @@ public class Wypoczynek extends ListActivity {
 			lista.add("Spotkanie z przyjació³mi");
 			lista.add("Spacer z psem");
 		}
+		
 		podDachem();
 
 	}
@@ -264,16 +262,11 @@ public class Wypoczynek extends ListActivity {
 
 	}
 
-	public void niePada() {
-		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w'))
-			lista.add("Zoo");
-
-	}
-
 	public void podDachem() {
 		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w')) {
 			lista.add("Kino");
-			lista.add("Wyjœcie na kawê");
+			lista.add("Kawiarnia");
+			lista.add("Restauracja");
 			lista.add("Krêgle");
 			lista.add("Bilard");
 			lista.add("Muzeum");
@@ -285,7 +278,7 @@ public class Wypoczynek extends ListActivity {
 			lista.add("Zajêcia muzyczne");
 		}
 		if ((poraDnia == 'w') || (poraDnia == 'n') || (poraDnia == 'g')) {
-			lista.add("Wyjœcie na imprezê");
+			lista.add("Impreza");
 			lista.add("Randka w ciemno");
 			lista.add("Pub");
 			lista.add("Koncert");
@@ -293,10 +286,8 @@ public class Wypoczynek extends ListActivity {
 
 	}
 
-	public void okazjonalne() { // dodaæ warunki
-		// lista.add("Koncert");
-		// lista.add("Cyrk");
-		// lista.add("IdŸ na wydarzenie w mieœcie");
+	public void okazjonalne() { 	
+		 lista.add("IdŸ na wydarzenie w mieœcie");
 	}
 
 	public void zalezne() {
@@ -330,18 +321,14 @@ public class Wypoczynek extends ListActivity {
 			}
 
 		}
-
-		if (!pogoda2.equals("pogodnie")) {
-			if ((godzina <= zachodSlonca) && (godzina >= wschodSlonca))
-				lista.add("Podziwiaj chmury/niebo");
-		}
-		// lista.add("Wyjœcie na pla¿ê");
-		// lista.add("Przeja¿d¿ka promem");
-		// lista.add("IdŸ na badania kontrolne");
+		
+		if ((godzina <= zachodSlonca) && (godzina >= wschodSlonca))
+				lista.add("Podziwiaj niebo");
+		
 
 		if (poraRoku != 'z') {
 
-			if ((Double.valueOf(wind) > 25) && (godzina > wschodSlonca)
+			if ((Double.valueOf(wind) >= 5) && (Double.valueOf(wind) <= 20)&& (godzina > wschodSlonca)
 					&& (godzina < zachodSlonca))
 				lista.add("Puszczanie latawca");
 
@@ -366,7 +353,7 @@ public class Wypoczynek extends ListActivity {
 				|| (wybrany.equals("Rysowanie krajobrazu"))
 				|| (wybrany.equals("Piknik"))) {
 			f = "Park";
-		} else if ((wybrany.equals("Wyjœcie na imprezê"))
+		} else if ((wybrany.equals("Impreza"))
 				|| (wybrany.equals("Randka w ciemno"))) {
 			f = "Club";
 		} else if (wybrany.equals("Zakupy")) {
@@ -379,12 +366,12 @@ public class Wypoczynek extends ListActivity {
 		} else if ((wybrany.equals("Podziwiaj wschód s³oñca"))
 				|| (wybrany.equals("Podziwiaj zachód s³oñca"))
 				|| (wybrany.equals("Podziwiaj gwiazdy"))
-				|| (wybrany.equals("Podziwiaj chmury/niebo"))
+				|| (wybrany.equals("Podziwiaj niebo"))
 				|| (wybrany.equals("Puszczanie latawca"))
 				|| (wybrany.equals("Wyjazd na dzia³kê/wieœ"))
 				|| (wybrany.equals("Opalanie"))) {
 			f = "1";
-		} else if (wybrany.equals("Wyjœcie na kawê")) {
+		} else if ((wybrany.equals("Kawiarnia"))||(wybrany.equals("Spotkanie z przyjació³mi"))) {
 			f = "Kawiarnia";
 		}
 
