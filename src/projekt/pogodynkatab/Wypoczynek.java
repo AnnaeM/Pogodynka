@@ -113,19 +113,19 @@ public class Wypoczynek extends ListActivity {
 			Log.i("B³¹d", "Pusty parametr");
 		}
 
-		//gdy nie uda³o siê ¿adnego rodzaju wypoczynku
+		// gdy nie uda³o siê ¿adnego rodzaju wypoczynku
 		if (lista.isEmpty()) {
 			lista.add("Zostañ w domu");
 		}
 
-		//utworzenie listy
+		// utworzenie listy
 		ArrayAdapter<String> array = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, lista);
 		setListAdapter(array);
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
-			//gdy zostanie wybrany element z listy
+			// gdy zostanie wybrany element z listy
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -185,7 +185,7 @@ public class Wypoczynek extends ListActivity {
 	public void wyborWypoczynku() {
 
 		poraDnia();
-		//ujednolicenie znaków w pogodzie
+		// ujednolicenie znaków w pogodzie
 		String pogoda2 = pogoda.toLowerCase();
 		if ((pogoda2.equals("pogodnie")) || (pogoda2.equals("przewaga chmur"))
 				|| (pogoda2.equals("ob³oki zanikaj¹ce"))
@@ -216,17 +216,17 @@ public class Wypoczynek extends ListActivity {
 		else if (pogoda2.contains("œnie¿ek"))
 			ladnaPogoda();
 
-		else
-			// listArray.add("Nieznany rodzaj pogody");
-			innaPogoda();
+		else if ((pogoda2.contains("burz")) || (pogoda2.contains("zawieja")))
+			Log.i("Nic nie dodawaj", "Nic nie dodawaj do listy");
 
-		// nie ma burzy - i tak powinno byæ "zostañ w domu
+		else
+			innaPogoda();
 
 		zalezne();
 	}
 
 	public void ladnaPogoda() {
-		if ((temp > -30) && (temp < 35)) {
+		if ((temp > -25) && (temp < 35)) {
 			podstawowe();
 			okazjonalne();
 		}
@@ -242,12 +242,12 @@ public class Wypoczynek extends ListActivity {
 
 	public void innaPogoda() {
 		// gêsta mgla itd
-		if ((temp > -30) && (temp < 35)) {
+		if ((temp > -25) && (temp < 35)) {
 			lista.add("Spacer");
 			lista.add("Spotkanie z przyjació³mi");
 			lista.add("Spacer z psem");
 		}
-		
+
 		podDachem();
 
 	}
@@ -286,8 +286,8 @@ public class Wypoczynek extends ListActivity {
 
 	}
 
-	public void okazjonalne() { 	
-		 lista.add("IdŸ na wydarzenie w mieœcie");
+	public void okazjonalne() {
+		lista.add("IdŸ na wydarzenie w mieœcie");
 	}
 
 	public void zalezne() {
@@ -320,25 +320,23 @@ public class Wypoczynek extends ListActivity {
 				lista.add("Podziwiaj gwiazdy");
 			}
 
-		}
-		
-		if ((godzina <= zachodSlonca) && (godzina >= wschodSlonca))
+			if ((godzina <= zachodSlonca) && (godzina >= wschodSlonca))
 				lista.add("Podziwiaj niebo");
-		
 
-		if (poraRoku != 'z') {
+			if (poraRoku != 'z') {
 
-			if ((Double.valueOf(wind) >= 5) && (Double.valueOf(wind) <= 20)&& (godzina > wschodSlonca)
-					&& (godzina < zachodSlonca))
-				lista.add("Puszczanie latawca");
+				if ((Double.valueOf(wind) >= 5) && (Double.valueOf(wind) <= 20)
+						&& (godzina > wschodSlonca) && (godzina < zachodSlonca))
+					lista.add("Puszczanie latawca");
 
-			if ((godzina < zachodSlonca) && (godzina > wschodSlonca)) {
+				if ((godzina < zachodSlonca) && (godzina > wschodSlonca)) {
 
-				lista.add("Wyjazd na dzia³kê/wieœ");
-				lista.add("Wyprawa do lasu");
-				if (pogoda2.equals("pogodnie")) {
-					lista.add("Opalanie");
-					lista.add("Piknik");
+					lista.add("Wyjazd na dzia³kê/wieœ");
+					lista.add("Wyprawa do lasu");
+					if (pogoda2.equals("pogodnie")) {
+						lista.add("Opalanie");
+						lista.add("Piknik");
+					}
 				}
 			}
 		}
@@ -371,7 +369,8 @@ public class Wypoczynek extends ListActivity {
 				|| (wybrany.equals("Wyjazd na dzia³kê/wieœ"))
 				|| (wybrany.equals("Opalanie"))) {
 			f = "1";
-		} else if ((wybrany.equals("Kawiarnia"))||(wybrany.equals("Spotkanie z przyjació³mi"))) {
+		} else if ((wybrany.equals("Kawiarnia"))
+				|| (wybrany.equals("Spotkanie z przyjació³mi"))) {
 			f = "Kawiarnia";
 		}
 

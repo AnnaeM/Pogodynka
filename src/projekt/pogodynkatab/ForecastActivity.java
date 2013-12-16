@@ -601,10 +601,10 @@ public class ForecastActivity extends TabActivity {
 	public double obliczTemperatureOdczuwalna(String temperatura, String wiatr) {
 		double wynik = Double.valueOf(temperatura);
 
-		double V = 0.0;
+		double V = 0;
 		double tempWC = Double.valueOf(temperatura);
 
-		if (V != 0) {
+		if (Double.valueOf(wiatr) != 0) {
 			V = Math.pow(Double.valueOf(wiatr), 0.16);
 			wynik = 13.12 + (0.6215 * tempWC) - (11.37 * V)
 					+ (0.3965 * tempWC * V);

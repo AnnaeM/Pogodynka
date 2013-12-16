@@ -44,7 +44,7 @@ public class Sporty extends ListActivity {
 
 		listArray = new ArrayList<String>();
 
-		//jeœli zosta³a pobrana pogoda
+		// jeœli zosta³a pobrana pogoda
 		if (ForecastActivity._mainActivity != null) {
 			List<ForecastDay> simple10days = ForecastActivity._mainActivity.simple10day;
 			dzien = simple10days.get(0);
@@ -52,7 +52,7 @@ public class Sporty extends ListActivity {
 			if (ForecastActivity._mainActivity.display_location != null) {
 				Log.i("SPORTY", "Nie jest nullem");
 				try {
-					//pobranie wymaganych dancyh
+					// pobranie wymaganych dancyh
 					city = ForecastActivity._mainActivity.display_location
 							.getString("city");
 					latitude = ForecastActivity._mainActivity.display_location
@@ -64,11 +64,13 @@ public class Sporty extends ListActivity {
 					pogoda = ForecastActivity._mainActivity.current_observation
 							.getString("weather");
 
-					//Log.i("Pogoda", pogoda.toString());
-					
-					//gdy stacja meteorologiczna nie poda rodzaju aktualnej pogody zostanie ona pobrana z prognozy godzinowej
+					// Log.i("Pogoda", pogoda.toString());
+
+					// gdy stacja meteorologiczna nie poda rodzaju aktualnej
+					// pogody zostanie ona pobrana z prognozy godzinowej
 					if (pogoda.equals("")) {
-						pogoda = ForecastActivity._mainActivity.hourlyForecast.get(0).condition;					
+						pogoda = ForecastActivity._mainActivity.hourlyForecast
+								.get(0).condition;
 						Log.i("Pogoda awaryjna", pogoda);
 					}
 					wind = ForecastActivity._mainActivity.current_observation
@@ -77,7 +79,7 @@ public class Sporty extends ListActivity {
 
 					miesiac = Integer.parseInt(dzien.data.month);
 
-					//wyszukanie godziny pobranej z serwera
+					// wyszukanie godziny pobranej z serwera
 					String godzinaString = "";
 					String aktualnaGodzina = ForecastActivity._mainActivity.aktualnaGodzina;
 					int i = 0;
@@ -89,7 +91,7 @@ public class Sporty extends ListActivity {
 							+ aktualnaGodzina.charAt(i + 2)
 							+ aktualnaGodzina.charAt(i + 3);
 					godzina = Integer.parseInt(godzinaString);
-					//Log.i("Wyluskana godzina", String.valueOf(godzina));
+					// Log.i("Wyluskana godzina", String.valueOf(godzina));
 
 					dzienTygodnia = dzien.data.weekDay;
 					poraRoku = poraRoku();
@@ -107,32 +109,32 @@ public class Sporty extends ListActivity {
 		}
 
 		else {
-			Log.i("B³¹d","Pusty parametr");
+			Log.i("B³¹d", "Pusty parametr");
 
 		}
 
-		//gdy nie uda³o siê dobraæ ¿adnej dyscypliny sportu
+		// gdy nie uda³o siê dobraæ ¿adnej dyscypliny sportu
 		if (listArray.isEmpty()) {
 			listArray.add("Zostañ w domu");
 		}
 
-		//utworzenie listy
+		// utworzenie listy
 		ArrayAdapter<String> array = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, listArray);
 		setListAdapter(array);
 		ListView listView = getListView();
 
-		//gdy zostanie wybrany element z listy
+		// gdy zostanie wybrany element z listy
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				
-				//wyszukiwanie w Google Maps
+
+				// wyszukiwanie w Google Maps
 				String wyszukiwanie = fraza((String) ((TextView) view)
 						.getText());
-				
+
 				if (!wyszukiwanie.equals("1")) {
 					String uri = "https://maps.google.pl/maps?q=" + city + "+"
 							+ wyszukiwanie;
@@ -146,43 +148,44 @@ public class Sporty extends ListActivity {
 
 	public void wyborSportow() {
 
-		//ujednolicenie znaków w pogodzie
-		String pogoda2 = pogoda.toLowerCase();		
-		if ((pogoda2.equals("pogodnie"))||(pogoda2.equals("przewaga chmur"))
-				||(pogoda2.equals("ob³oki zanikaj¹ce"))||(pogoda2.equals("niewielkie zachmurzenie"))
-				||(pogoda2.equals("pochmurno")))
+		// ujednolicenie znaków w pogodzie
+		String pogoda2 = pogoda.toLowerCase();
+		if ((pogoda2.equals("pogodnie")) || (pogoda2.equals("przewaga chmur"))
+				|| (pogoda2.equals("ob³oki zanikaj¹ce"))
+				|| (pogoda2.equals("niewielkie zachmurzenie"))
+				|| (pogoda2.equals("pochmurno")))
 			ladnaPogoda(poraDnia);
-		
+
 		else if ((pogoda2.contains("deszcz")))
 			deszczowaPogoda(poraDnia);
-				
+
 		else if (pogoda2.contains("m¿awka"))
 			deszczowaPogoda(poraDnia);
-		
 
 		else if (pogoda2.contains("zamglenia"))
 			ladnaPogoda(poraDnia);
 		else if (pogoda2.equals("gêsta mg³a"))
 			deszczowaPogoda(poraDnia);
-			//innaPogoda(poraDnia);
-		else if (pogoda2.contains("mg³"))//p³atki mg³y/mg³a
-			ladnaPogoda(poraDnia);	
-		
+		// innaPogoda(poraDnia);
+		else if (pogoda2.contains("mg³"))// p³atki mg³y/mg³a
+			ladnaPogoda(poraDnia);
+
 		else if (pogoda2.equals("gêsty œnieg"))
 			deszczowaPogoda(poraDnia);
 		else if (pogoda2.contains("œnieg"))
 			ladnaPogoda(poraDnia);
 		else if (pogoda2.contains("œnie¿ek"))
 			ladnaPogoda(poraDnia);
-		
-		
-			// listArray.add("Nieznany rodzaj pogody");
-			//innaPogoda(poraDnia);
 
-		//nie ma burzy - i tak powinno byæ "zostañ w domu"
+		else if ((pogoda2.contains("burz")) || (pogoda2.contains("zawieja")))
+			Log.i("Nic nie dodawaj", "Nic nie dodawaj do listy");
+
+		else
+			innaPogoda(poraDnia);
+
 	}
 
-	//funkcja okreœlaj¹ca porê dnia
+	// funkcja okreœlaj¹ca porê dnia
 	public char poraDnia() {
 
 		char pora;
@@ -205,7 +208,7 @@ public class Sporty extends ListActivity {
 		return pora;
 	}
 
-	//funckja okreœlaj¹ca porê roku
+	// funckja okreœlaj¹ca porê roku
 	public char poraRoku() {
 
 		// mo¿na dodaæ np. przedwioœnie
@@ -226,7 +229,7 @@ public class Sporty extends ListActivity {
 	}
 
 	public void ladnaPogoda(char poraDnia) {
-		if ((temp > -30) && (temp < 35)) {
+		if ((temp > -25) && (temp < 35)) {
 			standardowe();
 			naHali();
 			naDworze();
@@ -234,19 +237,20 @@ public class Sporty extends ListActivity {
 	}
 
 	public void deszczowaPogoda(char poraDnia) {
-		naHali();
+		if ((temp > -25) && (temp < 35))
+			naHali();
 	}
 
-	/*public void innaPogoda(char poraDnia) {
+	public void innaPogoda(char poraDnia) {
 		// gêsta mgla itd
-		if ((temp > -30) && (temp < 35)) {
+		if ((temp > -25) && (temp < 35)) {
 			listArray.add("Bieganie");
 			listArray.add("Joga");
 			listArray.add("Nordic walking");
 		}
 		naHali();
 
-	}*/
+	}
 
 	public void standardowe() {
 		listArray.add("Bieganie");
@@ -276,7 +280,8 @@ public class Sporty extends ListActivity {
 				listArray.add("Trening sztuk walki");
 				listArray.add("Basen");
 				listArray.add("Ping-pong");
-				
+				listArray.add("Gokarty");
+
 			}
 		}
 	}
@@ -285,23 +290,23 @@ public class Sporty extends ListActivity {
 
 		if ((poraDnia == 'p') || (poraDnia == 'o') || (poraDnia == 'w')) {
 			if (poraRoku != 'z') {
-				listArray.add("BMX");	
-				listArray.add("Gokarty");
+				listArray.add("BMX");
 				listArray.add("Golf");
 				listArray.add("Jazda konna");
 				listArray.add("Paintball");
 				listArray.add("Tenis");
 				listArray.add("Quady");
-				
+
 			}
 
 			else {
-				listArray.add("£y¿wy");
-				listArray.add("Snowboard");
-				listArray.add("Narciarstwo");
-				listArray.add("Hokej");
-				listArray.add("Sanki");
-
+				if (temp < -5) {
+					listArray.add("£y¿wy");
+					listArray.add("Snowboard");
+					listArray.add("Narciarstwo");
+					listArray.add("Hokej");
+					listArray.add("Sanki");
+				}
 			}
 		}
 
@@ -339,21 +344,21 @@ public class Sporty extends ListActivity {
 			f = "Stadnina+koni";
 		} else if ((wybrany.equals("£y¿wy")) || (wybrany.equals("Hokej"))) {
 			f = "Lodowisko";
-		} else if ((wybrany.equals("Narciarstwo"))||(wybrany.equals("Snowboard"))) {
+		} else if ((wybrany.equals("Narciarstwo"))
+				|| (wybrany.equals("Snowboard"))) {
 			f = "Stok+narciarski";
 		} else if (wybrany.equals("Trening sztuk walki")) {
 			f = "Szko³a+sztuk+walki";
-		} else if (wybrany.equals("Zostañ w domu")){
-			f="1";
-		}
-		else {
+		} else if (wybrany.equals("Zostañ w domu")) {
+			f = "1";
+		} else {
 			wybrany = wybrany.replace(' ', '+');
 			f = wybrany;
 		}
 		return f;
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -361,16 +366,15 @@ public class Sporty extends ListActivity {
 		return true;
 	}
 
-	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-	    switch(item.getItemId()){
-	    case R.id.about:
-	        Intent intent = new Intent(this, Info.class);
-	        startActivity(intent);
-	        return true;            
-	    }
-	    return false;
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.about:
+			Intent intent = new Intent(this, Info.class);
+			startActivity(intent);
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -147,6 +147,9 @@ public class MainActivity extends Activity implements LocationListener {
 
 			AlertDialog alert = builder.create();
 			alert.show();
+			
+			//wy³¹cz pobieranie danych z GPS
+			//locationManager.removeUpdates(this);
 
 		}
 
@@ -195,7 +198,7 @@ public class MainActivity extends Activity implements LocationListener {
 				double szerokosc = (double) (location.getLatitude());
 				double dlugosc = (double) (location.getLongitude());
 
-				//wy³¹cz GPS
+				//wy³¹cz pobieranie danych z GPS
 				locationManager.removeUpdates(this);
 				
 				//przejœcie do pobierania prognozy
@@ -205,6 +208,8 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 
 		// button.setEnabled(true);
+		//wy³¹cz pobieranie danych z GPS
+		locationManager.removeUpdates(this);
 	}
 
 	public void doPogody(double dlugosc, double szerokosc) {
